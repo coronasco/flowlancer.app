@@ -1,0 +1,51 @@
+:root {
+	/* Brand */
+	--brand-start: #3B82F6;
+	--brand-end: #8B5CF6;
+
+	/* Semantic */
+	--bg: var(--background);
+	--fg: var(--foreground);
+	--fg-muted: oklch(0.62 0.03 257);
+	--card: var(--card);
+	--muted: var(--muted);
+	--border: var(--border);
+	--success: oklch(0.72 0.17 150);
+	--warning: oklch(0.82 0.15 85);
+	--danger: oklch(0.62 0.23 26);
+
+	/* Radii */
+	--radius-xs: 4px;
+	--radius-sm: 6px;
+	--radius-md: 8px;
+	--radius-lg: 12px;
+	--radius-2xl: 24px;
+
+	/* Shadows */
+	--shadow-sm: 0 1px 2px rgb(0 0 0 / 0.07);
+	--shadow-md: 0 4px 12px rgb(0 0 0 / 0.08);
+	--shadow-lg: 0 12px 24px rgb(0 0 0 / 0.12);
+
+	/* Spacing scale */
+	--space-1: 4px;
+	--space-2: 8px;
+	--space-3: 12px;
+	--space-4: 16px;
+	--space-5: 20px;
+	--space-6: 24px;
+	--space-8: 32px;
+	--space-10: 40px;
+}
+
+.brand-gradient {
+	background-image: linear-gradient(90deg, var(--brand-start), var(--brand-end));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.brand-ring:focus-visible {
+	outline: 2px solid transparent;
+	outline-offset: 2px;
+	box-shadow: 0 0 0 2px rgb(255 255 255 / 0), 0 0 0 4px var(--brand-start);
+}

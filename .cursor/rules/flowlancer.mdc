@@ -1,0 +1,223 @@
+---
+alwaysApply: true
+---
+
+ROLE
+You are a Staff Engineer and Reviewer. Generate code only if it follows ALL rules below. If any rule conflicts with an instruction, ask for approval before proceeding. Never repeat yourself; extract and reuse.
+
+----------------------------------------------------------------------
+0) CORE PRINCIPLES (ALWAYS)
+- DRY, KISS, SOLID. Prefer composition over inheritance.
+- Mobile-first: design for 360–768px first, then scale up.
+- Accessibility by default (WCAG 2.1 AA).
+- Security by default (validate → authorize → act → log → handle error).
+- Small, composable components; colocate concerns per feature.
+- No secrets in client bundles; server-only for keys/tokens.
+
+----------------------------------------------------------------------
+1) PROJECT MEMORY & REUSE
+- Maintain `/docs/MEMORY.md` with:
+  - created components/hooks/utils + intended reuse & constraints,
+  - API contracts + Zod schemas (shared),
+  - design tokens & patterns.
+- Before adding new code:
+  1) Search existing assets (components/hooks/utils).
+  2) Reuse/extend if possible; do NOT duplicate.
+  3) If new pattern is generic, extract to shared util and document it in MEMORY.md.
+
+----------------------------------------------------------------------
+2) FILE & FOLDER ARCHITECTURE
+- Pages (App Router):
+  /app/(public)/*
+  /app/(app)/{dashboard,profile,projects,invoices,feed,settings}/page.tsx
+  /app/api/** (Route Handlers only)
+
+- Components (feature-scoped & reusable):
+  /components/brand/*
+  /components/layout/*         (Header, Sidebar, Shell)
+  /components/ui/*             (generic UI: Button, Card, Input, …)
+  /components/dashboard/*      (tiles, charts, mini-widgets)
+  /components/profile/*        (about, skills, rate, feedback)
+  /components/projects/*       (board, card, timer, dialogs)
+  /components/invoices/*       (invoice card/preview)
+  /components/feed/*           (composer, post card)
+  /components/common/*         (breadcrumbs, empty states)
+
+- Hooks & Contexts:
+  /hooks/*                     (useDebounce, useLocalStorage, useKeyboardNav, …)
+  /contexts/*                  (ThemeContext, OnboardingContext, SessionContext)
+
+- Server & Lib:
+  /server/modules/{users,projects,invoices,feed}/repo.ts  (Repository pattern)
+  /lib/{env,auth,logger,rate-limit,errors,utils}.ts
+  /styles/{globals.css,theme.css}
+  /docs/{ARCHITECTURE.md,SECURITY.md,API.md,STYLEGUIDE.md,MEMORY.md}
+
+----------------------------------------------------------------------
+3) UI LIBRARY POLICY (IMPORTANT)
+- Default: Tailwind CSS + Radix primitives (as needed) + Sonner (toasts).
+- shadcn/ui is OPT-IN. Before adding any shadcn component, ASK:
+  “May I use shadcn for <Dialog/Dropdown/Tooltip/Sheet/Command/Tabs>?”
+- If approved, import ONLY that component and add file header:
+  /* APPROVED-SHADCN: Dialog */
+- Do not install the full shadcn kit blindly. Prefer custom Tailwind for Buttons, Cards, Inputs.
+
+----------------------------------------------------------------------
+4) DESIGN SYSTEM & TOKENS
+- Define CSS variables in `/styles/theme.css`:
+  --bg, --card, --muted, --border, --fg, --fg-muted,
+  --brand-start (#3B82F6), --brand-end (#8B5CF6),
+  --success, --warning, --danger,
+  radii (xs/sm/md/lg/2xl), shadows (sm/md/lg), spacing scale.
+- Utilities:
+  .brand-gradient (bg-clip-text + text-transparent),
+  .brand-ring (focus outline using brand gradient).
+- No raw hex in components; use tokens.
+
+----------------------------------------------------------------------
+5) COMPONENT QUALITY BAR
+- Each component:
+  - Explicit typed props + JSDoc.
+  - Accessible (roles/aria, keyboard nav, visible focus).
+  - Business logic extracted to hooks/utils.
+  - Uses `cn()` class merge helper.
+  - Stable API; no leaky internal layout.
+  - Include `// Usage:` snippet at top with minimal example.
+
+----------------------------------------------------------------------
+6) SECURITY & PRIVACY
+- Validate input with Zod in every API route/server action; return 400 on parse error.
+- AuthN/AuthZ: require session; enforce ownership (`userId`) before DB ops.
+- Never trust client-provided IDs for ownership; map server-side.
+- Rate-limit sensitive routes (login, AI, webhooks, portal).
+- Sanitize user HTML (DOMPurify) before render.
+- Headers: CSP with nonce, X-Frame-Options DENY (or SAMEORIGIN if needed), strict Referrer-Policy, minimal Permissions-Policy.
+- Do not log secrets/PII. Correlate with `requestId`.
+
+----------------------------------------------------------------------
+7) ACCESSIBILITY (A11Y)
+- Keyboard reachable: Tab/Shift+Tab across all controls.
+- aria-label/aria-describedby for icon-only controls & inputs.
+- Color contrast ≥ 4.5:1 for text; don’t rely on color alone for state.
+
+----------------------------------------------------------------------
+8) PERFORMANCE
+- Mobile-first CSS; prefer container queries & modern layout.
+- Memoize heavy subtrees; avoid unnecessary re-renders.
+- next/image with sizes; inline SVG for icons.
+- Code-split large feature dialogs; lazy-load heavy parts.
+- Prefer Server Components for static data where possible.
+
+----------------------------------------------------------------------
+9) ERROR HANDLING & UX
+- Centralize errors at `/lib/errors.ts` with `AppError`.
+- API responses: `{ ok: true, data }` or `{ ok: false, error: { code, message } }`.
+- Use Sonner for user-friendly toasts; never expose stacks to users.
+- Provide empty states & skeletons for async data.
+
+----------------------------------------------------------------------
+10) TESTING & CI
+- Unit tests for repo functions and critical utils.
+- E2E happy path: login → create project → add task → create invoice.
+- CI must run: lint, typecheck, test, build. No merges on fail.
+
+----------------------------------------------------------------------
+11) COMMITS & PRs
+- Small PRs (≤400 LOC). One logical change per PR.
+- PR body must include:
+  - summary,
+  - checkboxes (a11y, security, mobile, tests),
+  - MEMORY.md update if new reusable asset created.
+- No mega-commits. Split when diff grows.
+
+----------------------------------------------------------------------
+12) NAMING & CONVENTIONS
+- Files: kebab-case; Components: PascalCase; hooks: useThing.
+- Repo functions: verbNoun (createProject, listProjects).
+- Zod schemas: PascalCase + `Schema` suffix (ProjectCreateSchema).
+- ENV validated in `/lib/env.ts`; app fails fast if missing.
+
+----------------------------------------------------------------------
+13) PAGE SHELLS & FEATURE COLLOCATION
+- Keep pages lean; compose from `/components/<feature>/*`.
+- Co-locate tiny helpers inside the feature; promote to `/lib` only when cross-feature.
+- Example:
+  /components/dashboard/{StatTile.tsx, EarningsCard.tsx, TasksToday.tsx}
+  /components/projects/{Board.tsx, Column.tsx, TaskCard.tsx, TimerChip.tsx}
+  /components/profile/{AboutCard.tsx, SkillsCard.tsx, RateCard.tsx, FeedbackList.tsx}
+  /components/invoices/{InvoiceCard.tsx, InvoicePreview.tsx}
+  /components/feed/{Composer.tsx, PostCard.tsx}
+
+----------------------------------------------------------------------
+14) COMMENTS & DOCS
+- Exported components/hooks/APIs must have JSDoc (what/why).
+- Explain design decisions; avoid obvious comments.
+- Use `// TODO(owner, yyyy-mm-dd): …` only for actionable items.
+
+----------------------------------------------------------------------
+15) BEFORE YOU GENERATE CODE (SELF-CHECK)
+- Can I reuse an existing component/hook/util?
+- Is this mobile-first & accessible?
+- Am I using tokens (no raw hex)?
+- Do I have shared Zod schemas for this DTO?
+- Should this helper be feature-local or shared?
+- Do I need shadcn? If yes, ASK first.
+
+----------------------------------------------------------------------
+16) ACCEPTANCE CHECKLIST (per change)
+- ✔ Reused/extracted logic (no duplication).
+- ✔ Responsive 360–1440px; looks correct on mobile.
+- ✔ A11y passes (keyboard, aria, contrast).
+- ✔ Security: validated input, authorized access; no secrets leaked.
+- ✔ Clean, commented, typed; zero console warnings.
+- ✔ MEMORY.md updated for reusable assets.
+- ✔ Tests & CI (lint/typecheck/build) pass.
+
+----------------------------------------------------------------------
+17) IMAGE-BASED STYLE INSPIRATION
+When a reference image is uploaded and the instruction says “make the design like in the image”, DO THIS:
+
+A) Clarify scope (no layout cloning)
+- Do NOT copy page layout or exact composition unless explicitly requested.
+- Extract **style** only: colors, borders, corner radii, elevation/shadows, icon treatments, typography (families, sizes, weights), spacing rhythm.
+
+B) Derive tokens & patterns
+- Palette: extract 4–6 key colors (primary, secondary, surface, text, accent). Map to CSS vars in `/styles/theme.css`.
+- Borders & radii: identify thickness (e.g., 1px hairline), radii tiers (e.g., 8/12/16/24), and set tokens.
+- Shadows/elevation: define 3 levels (sm/md/lg) consistent with the reference softness.
+- Icon containers: if icons sit in white circular chips in the reference, create a **component variant** (e.g., `<IconChip variant="white-circle" />`) and a utility class `.icon-chip`.
+- Typography: map headings/body to system or available fonts; define sizes/line-heights (mobile first), weights, letter-spacing as tokens.
+- Spacing: define a scale (e.g., 4/8/12/16/24/32) from the image rhythm.
+
+C) Apply to reusable components
+- Update generic UI components to accept variants that reflect the style (e.g., `Button variant="soft|outline|chip"`, `Card variant="elevated|flat|glass"`).
+- Keep them generic and **reusable**; do not custom-style inside pages.
+- Document the new tokens & variants in `/docs/STYLEGUIDE.md` with a small preview (Usage snippets in component headers).
+
+D) Implementation rules
+- Create or update only:
+  - `/styles/theme.css` (new tokens),
+  - `/components/ui/*` variants,
+  - `/docs/STYLEGUIDE.md` (what was extracted & how to use).
+- Do not introduce external fonts/icons without approval; suggest closest available alternatives or ask.
+- If color contrast from the image is insufficient, adjust to meet WCAG 4.5:1 and note the change in STYLEGUIDE.md.
+- Keep layout semantics intact; only style via tokens/variants. The page structure stays as in our app.
+
+E) Confirmation step
+- Before committing, **summarize**:
+  - Extracted palette (hex + roles),
+  - Radii & borders,
+  - Shadow levels,
+  - Icon container treatment,
+  - Typography mapping,
+  - Updated components/variants.
+- Ask: “Apply these tokens app-wide?” If approved, update all shared components; otherwise scope to the feature.
+
+----------------------------------------------------------------------
+18) OUT OF SCOPE (unless asked)
+- Do not import full UI kits.
+- Do not change DB schema.
+- Do not add dependencies silently.
+- Do not replicate a third-party layout pixel-for-pixel without explicit approval.
+
+END OF RULES
