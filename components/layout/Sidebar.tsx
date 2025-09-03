@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, User, FolderKanban, Receipt, Newspaper, Settings, Shield, BarChart3, Users, Activity } from "lucide-react";
+import { Home, User, FolderKanban, Receipt, Newspaper, Settings, Shield, BarChart3, Users, Activity, BookOpen } from "lucide-react";
 import {
   Sidebar as UISidebar,
   SidebarContent,
@@ -70,7 +70,7 @@ export function Sidebar() {
 				<Link href="/dashboard" className="brand-ring focus:outline-none" aria-label="Flowlancer home">
 					<div className="flex items-center gap-2">
 						<Image src="/flowlancer_logo_dark.svg" alt="Flowlancer" width={36} height={36} priority />
-						<span className="text-base font-semibold tracking-tight text-slate-900 dark:text-slate-100 group-data-[collapsible=icon]:hidden">Flowlancer</span>
+						<span className="text-base font-semibold tracking-tight text-slate-900 group-data-[collapsible=icon]:hidden">Flowlancer</span>
 					</div>
 				</Link>
 			</SidebarHeader>
@@ -134,6 +134,14 @@ export function Sidebar() {
 			<SidebarFooter className="pb-4 border-t border-slate-200/60">
 				<SidebarMenu>
 					<SidebarMenuItem>
+						<SidebarMenuButton asChild className="hover:bg-slate-100/80">
+							<Link href="/docs" aria-label="Documentation" title="Documentation" className="flex items-center gap-3">
+								<BookOpen className="h-4 w-4" />
+								<span className="truncate group-data-[collapsible=icon]:hidden font-medium">Docs</span>
+							</Link>
+						</SidebarMenuButton>
+					</SidebarMenuItem>
+					<SidebarMenuItem>
 						<SidebarMenuButton asChild isActive={pathname.startsWith("/dashboard/settings")} className="hover:bg-slate-100/80 data-[active=true]:bg-slate-900 data-[active=true]:text-white">
 							<Link href="/dashboard/settings" aria-label="Settings" title="Settings" className="flex items-center gap-3">
 								<Settings className="h-4 w-4" />
@@ -161,7 +169,7 @@ export function Sidebar() {
 					<div className="p-3 rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100/50 border border-emerald-200/50">
 						<p className="text-sm font-semibold text-emerald-900">Upgrade to Pro</p>
 						<p className="text-xs text-emerald-700 mt-1">Unlimited projects, AI features & priority support.</p>
-						<Link href="/dashboard" className="mt-3 flex h-8 px-3 items-center justify-center rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium transition-colors">
+						<Link href="/dashboard/upgrade" className="mt-3 flex h-8 px-3 items-center justify-center rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium transition-colors">
 							Upgrade Now
 						</Link>
 					</div>
