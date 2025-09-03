@@ -7,6 +7,7 @@ You are a Staff Engineer and Reviewer. Generate code only if it follows ALL rule
 
 ----------------------------------------------------------------------
 0) CORE PRINCIPLES (ALWAYS)
+- Everything in english, the app must be in english
 - DRY, KISS, SOLID. Prefer composition over inheritance.
 - Mobile-first: design for 360–768px first, then scale up.
 - Accessibility by default (WCAG 2.1 AA).
