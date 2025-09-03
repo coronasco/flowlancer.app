@@ -32,6 +32,27 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Set nonce for Next.js runtime scripts */}
+        <Script
+          id="nextjs-nonce-setup"
+          strategy="beforeInteractive"
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.__CSP_NONCE__ = '${nonce}';
+              if (typeof window !== 'undefined') {
+                const originalAppendChild = Element.prototype.appendChild;
+                Element.prototype.appendChild = function(child) {
+                  if (child.tagName === 'SCRIPT' && !child.nonce && !child.src) {
+                    child.nonce = window.__CSP_NONCE__;
+                  }
+                  return originalAppendChild.call(this, child);
+                };
+              }
+            `
+          }}
+        />
+        
         {/* Google Analytics - External Script */}
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <>

@@ -15,10 +15,10 @@ export function middleware() {
 	
 	const env = process.env.NODE_ENV;
 	if (env !== "production") {
-		// Dev: Use nonce even in development for consistency
+		// Dev: Relaxed CSP for development with HMR and debugging
 		const cspDev = [
 			"default-src 'self' data: blob:",
-			`script-src 'self' 'nonce-${nonce}' 'unsafe-eval' https://www.gstatic.com https://apis.google.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com`,
+			`script-src 'self' 'nonce-${nonce}' 'unsafe-eval' 'unsafe-inline' https://www.gstatic.com https://apis.google.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com`,
 			"style-src 'self' 'unsafe-inline'",
 			"img-src 'self' data: blob: https:",
 			"font-src 'self' data:",
@@ -32,11 +32,11 @@ export function middleware() {
 		return res;
 	}
 
-	// Production: Strict CSP with dynamic nonce
+	// Production: Strict CSP with dynamic nonce + Next.js compatibility
 	const csp = [
 		"default-src 'self'",
 		"base-uri 'self'",
-		`script-src 'self' 'nonce-${nonce}' https://www.gstatic.com https://apis.google.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com`,
+		`script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://www.gstatic.com https://apis.google.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com`,
 		"style-src 'self' 'unsafe-inline'",
 		"img-src 'self' data: blob: https:",
 		"font-src 'self' data:",

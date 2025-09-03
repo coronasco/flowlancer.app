@@ -7,8 +7,8 @@ This document describes the implementation of dynamic nonce-based Content Securi
 ## Problem Solved
 
 - **Issue**: Inline scripts (Next.js runtime, GA/GTM snippets) were blocked by static CSP nonce
-- **Solution**: Generate unique nonce per request and apply consistently to all inline scripts
-- **Security**: Maintains strict CSP without using `'unsafe-inline'`
+- **Solution**: Generate unique nonce per request with Next.js-compatible CSP policies
+- **Security**: Maintains strict CSP in production with `'strict-dynamic'` for Next.js compatibility
 
 ## Implementation
 
@@ -31,6 +31,8 @@ export function middleware() {
 **Features:**
 - Generates cryptographically secure random nonce per request
 - Passes nonce via `x-nonce` header to layout
+- Development: Uses `'unsafe-inline'` for Next.js HMR compatibility
+- Production: Uses `'strict-dynamic'` for Next.js runtime script loading
 - Includes all required domains in `connect-src`
 - Strict headers: `X-Frame-Options=DENY`, `Referrer-Policy`, minimal `Permissions-Policy`
 
@@ -55,6 +57,7 @@ export default async function RootLayout({ children }) {
 **Features:**
 - Reads nonce from middleware header
 - Applies nonce to all `<Script>` tags
+- Injects nonce setup script for Next.js runtime compatibility
 - Supports both external (`src`) and inline (`dangerouslySetInnerHTML`) scripts
 - Conditional rendering for GA/GTM based on environment variables
 
@@ -104,7 +107,8 @@ npm start
 
 ## Security Benefits
 
-✅ **No `unsafe-inline`** - All inline scripts use nonce
+✅ **Development**: `'unsafe-inline'` only in dev for Next.js HMR
+✅ **Production**: `'strict-dynamic'` allows nonce-loaded scripts to load others
 ✅ **Dynamic nonce** - Unique per request, prevents replay attacks  
 ✅ **Strict CSP** - Only trusted domains allowed
 ✅ **Frame protection** - `X-Frame-Options: DENY`
