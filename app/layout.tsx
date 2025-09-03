@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import Script from "next/script";
+import { Providers } from "@/components/layout/Providers";
 import "./globals.css";
 import "@/styles/theme.css";
 
@@ -114,7 +115,9 @@ export default async function RootLayout({
             />
           </noscript>
         )}
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

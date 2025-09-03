@@ -70,7 +70,7 @@ export function Sidebar() {
 				<Link href="/dashboard" className="brand-ring focus:outline-none" aria-label="Flowlancer home">
 					<div className="flex items-center gap-2">
 						<Image src="/flowlancer_logo_dark.svg" alt="Flowlancer" width={36} height={36} priority />
-						<span className="text-base font-semibold tracking-tight text-slate-900 group-data-[collapsible=icon]:hidden">Flowlancer</span>
+						<span className="text-base font-semibold tracking-tight text-slate-900 dark:text-slate-100 group-data-[collapsible=icon]:hidden">Flowlancer</span>
 					</div>
 				</Link>
 			</SidebarHeader>
