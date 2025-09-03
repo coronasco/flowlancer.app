@@ -8,24 +8,6 @@ import { OnboardingCoachmark } from "@/components/onboarding/OnboardingCoachmark
 import { useOnboarding } from "@/contexts/OnboardingContext";
 import { Folder, FileText, DollarSign } from "lucide-react";
 
-type Invoice = { 
-  id: string; 
-  project_id: string; 
-  user_email: string; 
-  invoice_number: string; 
-  client_name: string; 
-  total_amount: number; 
-  status: "pending" | "paid" | "overdue" | "cancelled"; 
-  generated_at: string; 
-};
-
-type Project = {
-  id: string;
-  name: string;
-  description?: string;
-  status?: string;
-};
-
 export default function InvoicesPage() {
   const { } = useSession();
   const { } = useOnboarding();
@@ -36,24 +18,24 @@ export default function InvoicesPage() {
 	const projects = dashboardData?.projects || [];
 
 	// Group invoices by project
-	const groupedInvoices = invoices.reduce((acc, invoice) => {
+	const groupedInvoices = invoices.reduce((acc: Record<string, { project?: Record<string, unknown>; invoices: Record<string, unknown>[] }>, invoice: Record<string, unknown>) => {
 		const project = projects.find(p => p.id === invoice.project_id);
-		const projectKey = project?.id || 'unknown';
+		const projectKey = String(project?.id || 'unknown');
 		
 		if (!acc[projectKey]) {
 			acc[projectKey] = {
-				project,
+				project: project as Record<string, unknown>,
 				invoices: []
 			};
 		}
 		acc[projectKey].invoices.push(invoice);
 		return acc;
-	}, {} as Record<string, { project?: Project; invoices: Invoice[] }>);
+	}, {} as Record<string, { project?: Record<string, unknown>; invoices: Record<string, unknown>[] }>);
 
 	// Sort projects by most recent invoice
 	const sortedProjectGroups = Object.entries(groupedInvoices).sort(([, a], [, b]) => {
-		const aLatest = Math.max(...a.invoices.map(i => new Date(i.generated_at).getTime()));
-		const bLatest = Math.max(...b.invoices.map(i => new Date(i.generated_at).getTime()));
+		const aLatest = Math.max(...a.invoices.map((i: Record<string, unknown>) => new Date(String(i.generated_at)).getTime()));
+		const bLatest = Math.max(...b.invoices.map((i: Record<string, unknown>) => new Date(String(i.generated_at)).getTime()));
 		return bLatest - aLatest;
 	});
 
@@ -114,9 +96,9 @@ export default function InvoicesPage() {
 				{!isLoading && sortedProjectGroups.length > 0 && (
 					<div className="space-y-8">
 						{sortedProjectGroups.map(([projectId, { project, invoices: projectInvoices }]) => {
-							const totalAmount = projectInvoices.reduce((sum, inv) => sum + inv.total_amount, 0);
-							const paidAmount = projectInvoices.filter(inv => inv.status === 'paid').reduce((sum, inv) => sum + inv.total_amount, 0);
-							const pendingCount = projectInvoices.filter(inv => inv.status === 'pending').length;
+							const totalAmount = projectInvoices.reduce((sum: number, inv: Record<string, unknown>) => sum + Number(inv.total_amount), 0);
+							const paidAmount = projectInvoices.filter((inv: Record<string, unknown>) => inv.status === 'paid').reduce((sum: number, inv: Record<string, unknown>) => sum + Number(inv.total_amount), 0);
+							const pendingCount = projectInvoices.filter((inv: Record<string, unknown>) => inv.status === 'pending').length;
 
 							return (
 								<div key={projectId} className="space-y-4">
@@ -128,19 +110,19 @@ export default function InvoicesPage() {
 											</div>
 											<div>
 												<h2 className="text-lg font-semibold text-slate-900">
-													{project?.name || 'Unknown Project'}
+													{String(project?.name) || 'Unknown Project'}
 												</h2>
 												<div className="flex items-center gap-4 text-sm text-slate-500">
 													<span>{projectInvoices.length} invoice{projectInvoices.length !== 1 ? 's' : ''}</span>
 													<span>•</span>
 													<span className="flex items-center gap-1">
 														<DollarSign className="h-3 w-3" />
-														${totalAmount.toFixed(2)} total
+														${Number(totalAmount).toFixed(2)} total
 													</span>
-													{paidAmount > 0 && (
+													{Number(paidAmount) > 0 && (
 														<>
 															<span>•</span>
-															<span className="text-green-600">${paidAmount.toFixed(2)} paid</span>
+															<span className="text-green-600">${Number(paidAmount).toFixed(2)} paid</span>
 														</>
 													)}
 													{pendingCount > 0 && (
@@ -164,8 +146,8 @@ export default function InvoicesPage() {
 
 									{/* Project Invoices Grid */}
 									<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ml-11">
-										{projectInvoices.sort((a, b) => new Date(b.generated_at).getTime() - new Date(a.generated_at).getTime()).map((inv) => (
-											<Link key={inv.id} href={`/dashboard/invoices/${inv.id}`} className="group">
+										{projectInvoices.sort((a: Record<string, unknown>, b: Record<string, unknown>) => new Date(String(b.generated_at)).getTime() - new Date(String(a.generated_at)).getTime()).map((inv: Record<string, unknown>) => (
+											<Link key={String(inv.id)} href={`/dashboard/invoices/${String(inv.id)}`} className="group">
 												<div className="border border-slate-100 p-4 rounded-lg bg-white hover:shadow-md transition-all duration-200">
 													<div className="flex items-start justify-between mb-3">
 														<div className="bg-slate-100 p-1.5 rounded">
@@ -177,26 +159,26 @@ export default function InvoicesPage() {
 															inv.status === 'cancelled' ? 'bg-slate-100 text-slate-700' :
 															'bg-red-100 text-red-700'
 														}`}>
-															{inv.status}
+															{String(inv.status)}
 														</span>
 													</div>
 													
 													<h3 className="font-medium text-slate-900 mb-2 text-sm">
-														#{inv.invoice_number}
+														#{String(inv.invoice_number)}
 													</h3>
 													
 													<div className="space-y-1">
 														<div className="flex items-center justify-between text-xs">
 															<span className="text-slate-500">Client</span>
-															<span className="font-medium text-slate-900 truncate ml-2">{inv.client_name}</span>
+															<span className="font-medium text-slate-900 truncate ml-2">{String(inv.client_name)}</span>
 														</div>
 														<div className="flex items-center justify-between text-xs">
 															<span className="text-slate-500">Amount</span>
-															<span className="font-semibold text-slate-900">${inv.total_amount.toFixed(2)}</span>
+															<span className="font-semibold text-slate-900">${Number(inv.total_amount).toFixed(2)}</span>
 														</div>
 														<div className="flex items-center justify-between text-xs">
 															<span className="text-slate-500">Date</span>
-															<span className="text-slate-600">{new Date(inv.generated_at).toLocaleDateString()}</span>
+															<span className="text-slate-600">{new Date(String(inv.generated_at)).toLocaleDateString()}</span>
 														</div>
 													</div>
 													

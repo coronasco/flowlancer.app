@@ -18,13 +18,13 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 		}
 
 		// Get real data from Firebase and Supabase
-		// const { createClient } = await import("@supabase/supabase-js");
-		// const supabase = createClient(...) would be used here for real data
+		// Real data would be fetched here
 		
 		// Get all users from Firebase
 		const usersSnapshot = await adminSdk.firestore().collection("customers").get();
 		
 		// Get projects and invoices count per user from Supabase using admin access
+		const { createClient } = await import("@supabase/supabase-js");
 		const supabaseAdmin = createClient(
 			process.env.NEXT_PUBLIC_SUPABASE_URL!,
 			process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -42,7 +42,7 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 		
 		// Count projects per user
 		if (projectsResult.data) {
-			projectsResult.data.forEach((project) => {
+			projectsResult.data.forEach((project: Record<string, unknown>) => {
 				const email = project.user_email;
 				if (!projectsPerUser.has(email)) {
 					projectsPerUser.set(email, 0);
@@ -53,7 +53,7 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 		
 		// Count invoices and revenue per user
 		if (invoicesResult.data) {
-			invoicesResult.data.forEach((invoice) => {
+			invoicesResult.data.forEach((invoice: Record<string, unknown>) => {
 				const email = invoice.user_email;
 				
 				// Count invoices
@@ -67,13 +67,13 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 					if (!revenuePerUser.has(email)) {
 						revenuePerUser.set(email, 0);
 					}
-					revenuePerUser.set(email, revenuePerUser.get(email) + parseFloat(invoice.total_amount || "0"));
+					revenuePerUser.set(email, revenuePerUser.get(email) + parseFloat(String(invoice.total_amount) || "0"));
 				}
 			});
 		}
 		
 		// Build users array from Firebase data
-		const users = [];
+		const users: Record<string, unknown>[] = [];
 		usersSnapshot.forEach((doc) => {
 			const userData = doc.data();
 			const email = userData.email || "unknown";
@@ -120,9 +120,9 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 			inactive: users.filter(u => u.status === "inactive").length,
 			proUsers: users.filter(u => u.plan === "pro").length,
 			freeUsers: users.filter(u => u.plan === "free").length,
-			totalRevenue: users.reduce((sum, u) => sum + u.totalRevenue, 0),
-			averageRevenue: users.reduce((sum, u) => sum + u.totalRevenue, 0) / users.length,
-			newThisMonth: users.filter(u => new Date(u.createdAt) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)).length
+			totalRevenue: users.reduce((sum, u) => sum + Number(u.totalRevenue), 0),
+			averageRevenue: users.reduce((sum, u) => sum + Number(u.totalRevenue), 0) / users.length,
+			newThisMonth: users.filter(u => new Date(String(u.createdAt)) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)).length
 		};
 
 		// Return just the data - withAuth will wrap it
@@ -136,4 +136,4 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 	}
 }
 
-export const GET = withAuth(handler);
+export const GET = withAuth(handler as (req: Request, session: Record<string, unknown>) => Promise<Response>);

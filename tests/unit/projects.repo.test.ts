@@ -11,7 +11,7 @@ describe("projects repo (in-memory fallback)", () => {
     });
 
     it("creates and lists projects", async () => {
-        const p = await repo.createProject(userId, { name: "Test Project" });
+        const p = await repo.createProject(userId, { name: "Test Project", price_type: "hourly" as const, price: 50 });
         expect(p.name).toBe("Test Project");
 
         const list = await repo.listProjects(userId);
@@ -25,7 +25,7 @@ describe("projects repo (in-memory fallback)", () => {
     });
 
     it("task lifecycle: add → list → move → rename → delete", async () => {
-        const p = await repo.createProject(userId, { name: "With Tasks" });
+        const p = await repo.createProject(userId, { name: "With Tasks", price_type: "hourly" as const, price: 75 });
 
         const t1 = await repo.addTask(userId, p.id, { title: "First", status: "Backlog" });
         const t2 = await repo.addTask(userId, p.id, { title: "Second", status: "Backlog" });
@@ -52,7 +52,7 @@ describe("projects repo (in-memory fallback)", () => {
     });
 
     it("updates and deletes project", async () => {
-        const p = await repo.createProject(userId, { name: "Old" });
+        const p = await repo.createProject(userId, { name: "Old", price_type: "fixed" as const, price: 1000 });
         const updated = await repo.updateProject(userId, p.id, { name: "New" });
         expect(updated.name).toBe("New");
 

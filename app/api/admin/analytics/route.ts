@@ -18,8 +18,7 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 		}
 
 		// Get comprehensive analytics data from Firebase and Supabase
-		// const { createClient } = await import("@supabase/supabase-js");
-		// const supabase = createClient(...) would be used here for real data
+		// Real data would be fetched here
 		
 		// Get all users from Firebase
 		const usersSnapshot = await adminSdk.firestore().collection("customers").get();
@@ -62,6 +61,7 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 		});
 		
 		// Get projects and invoices data from Supabase using admin access
+		const { createClient } = await import("@supabase/supabase-js");
 		const supabaseAdmin = createClient(
 			process.env.NEXT_PUBLIC_SUPABASE_URL!,
 			process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -77,15 +77,15 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 		
 		// Calculate project metrics
 		const totalProjects = projects.length;
-		const completedProjects = projects.filter(p => p.status === "completed").length;
+		const completedProjects = projects.filter((p: Record<string, unknown>) => p.status === "completed").length;
 		const completionRate = totalProjects > 0 ? (completedProjects / totalProjects) * 100 : 0;
 		
 		// Calculate revenue metrics
-		const totalRevenue = invoices.reduce((sum, invoice) => {
-			return invoice.status === "paid" ? sum + parseFloat(invoice.total_amount || "0") : sum;
+		const totalRevenue = invoices.reduce((sum: number, invoice: Record<string, unknown>) => {
+			return invoice.status === "paid" ? sum + parseFloat(String(invoice.total_amount) || "0") : sum;
 		}, 0);
 		
-		const paidInvoices = invoices.filter(i => i.status === "paid");
+		const paidInvoices = invoices.filter((i: Record<string, unknown>) => i.status === "paid");
 		const projectRevenue = totalRevenue * 0.85; // Assume 85% from projects
 		const subscriptionRevenue = proUsers * 29.99; // $29.99 per pro user per month
 		const platformFees = totalRevenue * 0.05; // 5% platform fee
@@ -159,4 +159,4 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 	}
 }
 
-export const GET = withAuth(handler);
+export const GET = withAuth(handler as (req: Request, session: Record<string, unknown>) => Promise<Response>);

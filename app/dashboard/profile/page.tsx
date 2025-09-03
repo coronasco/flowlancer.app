@@ -947,25 +947,25 @@ export default function ProfilePage() {
 								</div>
 							))
 						) : projects.length > 0 ? (
-							projects.slice(0, 4).map((project) => (
-								<Link key={project.id} href={`/dashboard/projects/${project.id}`} className="group block">
+							projects.slice(0, 4).map((project: Record<string, unknown>) => (
+								<Link key={String(project.id)} href={`/dashboard/projects/${String(project.id)}`} className="group block">
 									<div className="border border-slate-200 rounded-lg p-4 hover:shadow-md hover:border-violet-300 transition-all duration-200">
 										<div className="flex items-start justify-between mb-3">
 											<div className="flex items-center gap-3">
 												<div className={`w-3 h-3 rounded-full ${
-													project.status === 'completed' ? 'bg-green-500' : 
-													project.status === 'in-progress' ? 'bg-blue-500' : 'bg-slate-400'
+													String(project.status) === 'completed' ? 'bg-green-500' : 
+													String(project.status) === 'in-progress' ? 'bg-blue-500' : 'bg-slate-400'
 												}`} />
 												<h4 className="font-semibold text-slate-900 group-hover:text-violet-600 transition-colors">
-													{project.name}
+													{String(project.name)}
 												</h4>
 											</div>
 											<ExternalLink className="h-4 w-4 text-slate-400 group-hover:text-violet-500 transition-colors" />
 										</div>
 										
-										{project.description && (
+										{Boolean(project.description) && (
 											<p className="text-sm text-slate-600 line-clamp-2 mb-3">
-												{project.description}
+												{String(project.description)}
 											</p>
 										)}
 
@@ -977,18 +977,18 @@ export default function ProfilePage() {
 													 project.status === 'in-progress' ? 'In Progress' : 'Planning'}
 												</span>
 											</div>
-											{project.price && (
+											{Boolean(project.price) && (
 												<div className="flex items-center gap-1">
 													<DollarSign className="h-3 w-3" />
 													<span>
-														${project.price}{project.price_type === 'hourly' ? '/hr' : ''}
+														${String(project.price)}{String(project.price_type) === 'hourly' ? '/hr' : ''}
 													</span>
 												</div>
 											)}
-											{project.deadline && (
+											{Boolean(project.deadline) && (
 												<div className="flex items-center gap-1">
 													<Calendar className="h-3 w-3" />
-													<span>{new Date(project.deadline).toLocaleDateString()}</span>
+													<span>{new Date(String(project.deadline)).toLocaleDateString()}</span>
 												</div>
 											)}
 										</div>
@@ -998,25 +998,25 @@ export default function ProfilePage() {
 												{project.tasks_count !== undefined && (
 													<div className="flex items-center gap-1 text-slate-500">
 														<CheckCircle2 className="h-3 w-3" />
-														<span>{project.completed_tasks || 0}/{project.tasks_count} tasks</span>
+														<span>{Number(project.completed_tasks || 0)}/{Number(project.tasks_count)} tasks</span>
 													</div>
 												)}
-												{project.total_hours !== undefined && project.total_hours > 0 && (
+												{project.total_hours !== undefined && Number(project.total_hours) > 0 && (
 													<div className="flex items-center gap-1 text-slate-500">
 														<Timer className="h-3 w-3" />
 														<span>
-															{project.total_hours >= 1 
-																? `${Math.floor(project.total_hours)}h ${Math.round((project.total_hours % 1) * 60)}m`.replace(' 0m', '')
-																: project.total_hours >= (1/60)
-																? `${Math.round(project.total_hours * 60)}m`
-																: `${Math.round(project.total_hours * 3600)}s`
+															{Number(project.total_hours) >= 1 
+																? `${Math.floor(Number(project.total_hours))}h ${Math.round((Number(project.total_hours) % 1) * 60)}m`.replace(' 0m', '')
+																: Number(project.total_hours) >= (1/60)
+																? `${Math.round(Number(project.total_hours) * 60)}m`
+																: `${Math.round(Number(project.total_hours) * 3600)}s`
 															}
 														</span>
 													</div>
 												)}
 											</div>
 											<div className="text-xs text-slate-400">
-												{new Date(project.created_at).toLocaleDateString()}
+												{new Date(String(project.created_at)).toLocaleDateString()}
 											</div>
 										</div>
 									</div>
@@ -1082,25 +1082,25 @@ export default function ProfilePage() {
 								</div>
 							))
 						) : feedback.length > 0 ? (
-							feedback.slice(0, 4).map((item) => {
-								const timeAgo = new Date(item.created_at).toLocaleDateString('en-US', {
+							feedback.slice(0, 4).map((item: Record<string, unknown>) => {
+								const timeAgo = new Date(String(item.created_at)).toLocaleDateString('en-US', {
 									month: 'short',
 									day: 'numeric',
-									year: new Date().getFullYear() !== new Date(item.created_at).getFullYear() ? 'numeric' : undefined
+									year: new Date().getFullYear() !== new Date(String(item.created_at)).getFullYear() ? 'numeric' : undefined
 								});
 								
 								return (
-									<div key={item.id} className="p-4 bg-white/60 rounded-lg border border-amber-200/30">
+									<div key={String(item.id)} className="p-4 bg-white/60 rounded-lg border border-amber-200/30">
 										<div className="flex items-start justify-between mb-2">
 											<div>
-												<p className="text-sm font-medium text-amber-900">{item.client_name}</p>
-												<p className="text-xs text-amber-600">{item.project?.name || "Project"}</p>
+												<p className="text-sm font-medium text-amber-900">{String(item.client_name)}</p>
+												<p className="text-xs text-amber-600">{String((item.project as Record<string, unknown>)?.name || "Project")}</p>
 											</div>
 											<div className="flex items-center gap-1">
 												{Array.from({ length: 5 }).map((_, starIndex) => (
 													<svg 
 														key={starIndex} 
-														className={`w-3 h-3 ${starIndex < item.rating ? 'text-amber-400' : 'text-amber-200'}`} 
+														className={`w-3 h-3 ${starIndex < Number(item.rating) ? 'text-amber-400' : 'text-amber-200'}`} 
 														fill="currentColor" 
 														viewBox="0 0 20 20"
 													>
@@ -1109,8 +1109,8 @@ export default function ProfilePage() {
 												))}
 											</div>
 										</div>
-										{item.comment && (
-											<p className="text-sm text-amber-800 leading-relaxed mb-2">{item.comment}</p>
+										{Boolean(item.comment) && (
+											<p className="text-sm text-amber-800 leading-relaxed mb-2">{String(item.comment)}</p>
 										)}
 										<p className="text-xs text-amber-600">{timeAgo}</p>
 									</div>

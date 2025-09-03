@@ -90,7 +90,7 @@ export default function AdminAnalytics() {
 	// Fetch analytics data
 	const { data: analyticsData, isLoading } = useQuery({
 		queryKey: ["admin-analytics"],
-		queryFn: () => api<Record<string, unknown>>("/api/admin/analytics", undefined, user),
+		queryFn: () => api<Record<string, unknown>>("/api/admin/analytics", undefined, user || undefined),
 		enabled: !!user && isAdmin,
 		refetchInterval: 30000, // Refresh every 30 seconds
 	});
@@ -155,12 +155,12 @@ export default function AdminAnalytics() {
 							<div>
 								<p className="text-sm font-medium text-slate-600 mb-1">User Growth</p>
 								<p className="text-2xl font-bold text-slate-900">
-									{isLoading ? <Skeleton className="h-8 w-16" /> : formatPercent(analyticsData?.userGrowth || 0)}
+									{isLoading ? <Skeleton className="h-8 w-16" /> : formatPercent(Number((analyticsData as Record<string, unknown>)?.userGrowth || 0))}
 								</p>
 								<p className="text-sm text-slate-500 mt-1">vs last month</p>
 							</div>
 							<div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-								{(analyticsData?.userGrowth || 0) >= 0 ? (
+								{Number((analyticsData as Record<string, unknown>)?.userGrowth || 0) >= 0 ? (
 									<TrendingUp className="w-6 h-6 text-blue-600" />
 								) : (
 									<TrendingDown className="w-6 h-6 text-red-600" />
@@ -175,7 +175,7 @@ export default function AdminAnalytics() {
 							<div>
 								<p className="text-sm font-medium text-slate-600 mb-1">Revenue Growth</p>
 								<p className="text-2xl font-bold text-slate-900">
-									{isLoading ? <Skeleton className="h-8 w-16" /> : formatPercent(analyticsData?.revenueGrowth || 0)}
+									{isLoading ? <Skeleton className="h-8 w-16" /> : formatPercent(Number((analyticsData as Record<string, unknown>)?.revenueGrowth || 0))}
 								</p>
 								<p className="text-sm text-slate-500 mt-1">vs last month</p>
 							</div>
@@ -191,7 +191,7 @@ export default function AdminAnalytics() {
 							<div>
 								<p className="text-sm font-medium text-slate-600 mb-1">Conversion Rate</p>
 								<p className="text-2xl font-bold text-slate-900">
-									{isLoading ? <Skeleton className="h-8 w-16" /> : `${(analyticsData?.conversionRate || 0).toFixed(1)}%`}
+									{isLoading ? <Skeleton className="h-8 w-16" /> : `${Number((analyticsData as Record<string, unknown>)?.conversionRate || 0).toFixed(1)}%`}
 								</p>
 								<p className="text-sm text-slate-500 mt-1">signup to paid</p>
 							</div>
@@ -207,7 +207,7 @@ export default function AdminAnalytics() {
 							<div>
 								<p className="text-sm font-medium text-slate-600 mb-1">Avg Project Value</p>
 								<p className="text-2xl font-bold text-slate-900">
-									{isLoading ? <Skeleton className="h-8 w-24" /> : formatCurrency(analyticsData?.avgProjectValue || 0)}
+									{isLoading ? <Skeleton className="h-8 w-24" /> : formatCurrency(Number((analyticsData as Record<string, unknown>)?.avgProjectValue || 0))}
 								</p>
 								<p className="text-sm text-slate-500 mt-1">per project</p>
 							</div>
@@ -241,15 +241,15 @@ export default function AdminAnalytics() {
 							<div className="space-y-4">
 								<div className="grid grid-cols-3 gap-4 text-center">
 									<div>
-										<p className="text-2xl font-bold text-slate-900">{analyticsData?.dailyActiveUsers || 0}</p>
+										<p className="text-2xl font-bold text-slate-900">{Number((analyticsData as Record<string, unknown>)?.dailyActiveUsers || 0)}</p>
 										<p className="text-sm text-slate-600">Daily Active</p>
 									</div>
 									<div>
-										<p className="text-2xl font-bold text-slate-900">{analyticsData?.weeklyActiveUsers || 0}</p>
+										<p className="text-2xl font-bold text-slate-900">{Number((analyticsData as Record<string, unknown>)?.weeklyActiveUsers || 0)}</p>
 										<p className="text-sm text-slate-600">Weekly Active</p>
 									</div>
 									<div>
-										<p className="text-2xl font-bold text-slate-900">{analyticsData?.monthlyActiveUsers || 0}</p>
+										<p className="text-2xl font-bold text-slate-900">{Number((analyticsData as Record<string, unknown>)?.monthlyActiveUsers || 0)}</p>
 										<p className="text-sm text-slate-600">Monthly Active</p>
 									</div>
 								</div>
@@ -289,7 +289,7 @@ export default function AdminAnalytics() {
 											<span className="text-sm text-slate-600">Project Payments</span>
 										</div>
 										<span className="text-sm font-medium text-slate-900">
-											{formatCurrency(analyticsData?.projectRevenue || 0)}
+											{formatCurrency(Number((analyticsData as Record<string, unknown>)?.projectRevenue || 0))}
 										</span>
 									</div>
 									
@@ -299,7 +299,7 @@ export default function AdminAnalytics() {
 											<span className="text-sm text-slate-600">Pro Subscriptions</span>
 										</div>
 										<span className="text-sm font-medium text-slate-900">
-											{formatCurrency(analyticsData?.subscriptionRevenue || 0)}
+											{formatCurrency(Number((analyticsData as Record<string, unknown>)?.subscriptionRevenue || 0))}
 										</span>
 									</div>
 									
@@ -309,14 +309,14 @@ export default function AdminAnalytics() {
 											<span className="text-sm text-slate-600">Platform Fees</span>
 										</div>
 										<span className="text-sm font-medium text-slate-900">
-											{formatCurrency(analyticsData?.platformFees || 0)}
+											{formatCurrency(Number((analyticsData as Record<string, unknown>)?.platformFees || 0))}
 										</span>
 									</div>
 								</div>
 								
 								<div className="bg-slate-50 rounded-lg p-4 text-center">
 									<p className="text-lg font-bold text-slate-900">
-										{formatCurrency((analyticsData?.projectRevenue || 0) + (analyticsData?.subscriptionRevenue || 0) + (analyticsData?.platformFees || 0))}
+										{formatCurrency(Number((analyticsData as Record<string, unknown>)?.projectRevenue || 0) + Number((analyticsData as Record<string, unknown>)?.subscriptionRevenue || 0) + Number((analyticsData as Record<string, unknown>)?.platformFees || 0))}
 									</p>
 									<p className="text-sm text-slate-600">Total Revenue This Month</p>
 								</div>
@@ -341,7 +341,7 @@ export default function AdminAnalytics() {
 								<div className="flex items-center justify-between">
 									<span className="text-sm text-slate-600">Completion Rate</span>
 									<span className="text-sm font-medium text-slate-900">
-										{(analyticsData?.completionRate || 0).toFixed(1)}%
+										{Number((analyticsData as Record<string, unknown>)?.completionRate || 0).toFixed(1)}%
 									</span>
 								</div>
 								<div className="w-full bg-slate-200 rounded-full h-2">
@@ -351,7 +351,7 @@ export default function AdminAnalytics() {
 									></div>
 								</div>
 								<p className="text-xs text-slate-500">
-									{analyticsData?.completedProjects || 0} of {analyticsData?.totalProjectsStarted || 0} projects completed
+									{Number((analyticsData as Record<string, unknown>)?.completedProjects || 0)} of {Number((analyticsData as Record<string, unknown>)?.totalProjectsStarted || 0)} projects completed
 								</p>
 							</div>
 						)}
@@ -371,7 +371,7 @@ export default function AdminAnalytics() {
 								<div className="flex items-center justify-between">
 									<span className="text-sm text-slate-600">Avg Rating</span>
 									<span className="text-sm font-medium text-slate-900">
-										{(analyticsData?.avgRating || 0).toFixed(1)}/5.0
+										{Number((analyticsData as Record<string, unknown>)?.avgRating || 0).toFixed(1)}/5.0
 									</span>
 								</div>
 								<div className="flex items-center gap-1">
@@ -379,13 +379,13 @@ export default function AdminAnalytics() {
 										<div
 											key={star}
 											className={`w-4 h-4 rounded ${
-												star <= (analyticsData?.avgRating || 0) ? 'bg-yellow-400' : 'bg-slate-200'
+												star <= Number((analyticsData as Record<string, unknown>)?.avgRating || 0) ? 'bg-yellow-400' : 'bg-slate-200'
 											}`}
 										></div>
 									))}
 								</div>
 								<p className="text-xs text-slate-500">
-									Based on {analyticsData?.totalReviews || 0} reviews
+									Based on {Number((analyticsData as Record<string, unknown>)?.totalReviews || 0)} reviews
 								</p>
 							</div>
 						)}
@@ -405,19 +405,19 @@ export default function AdminAnalytics() {
 								<div className="flex items-center justify-between">
 									<span className="text-sm text-slate-600">Uptime</span>
 									<span className="text-sm font-medium text-green-600">
-										{(analyticsData?.uptime || 99.9).toFixed(1)}%
+										{Number((analyticsData as Record<string, unknown>)?.uptime || 99.9).toFixed(1)}%
 									</span>
 								</div>
 								<div className="flex items-center justify-between">
 									<span className="text-sm text-slate-600">Avg Response</span>
 									<span className="text-sm font-medium text-slate-900">
-										{analyticsData?.avgResponseTime || 0}ms
+										{Number((analyticsData as Record<string, unknown>)?.avgResponseTime || 0)}ms
 									</span>
 								</div>
 								<div className="flex items-center justify-between">
 									<span className="text-sm text-slate-600">Error Rate</span>
 									<span className="text-sm font-medium text-slate-900">
-										{(analyticsData?.errorRate || 0).toFixed(2)}%
+										{Number((analyticsData as Record<string, unknown>)?.errorRate || 0).toFixed(2)}%
 									</span>
 								</div>
 							</div>

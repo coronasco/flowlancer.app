@@ -318,19 +318,19 @@ export default function DashboardHome() {
 								</div>
 							) : (
 								<div className="space-y-6">
-									{projects.slice(0, 3).map((project) => (
-										<div key={project.id} className="mb-6 last:mb-0">
-											<Link href={`/dashboard/projects/${project.id}`} className="group block">
+									{projects.slice(0, 3).map((project: Record<string, unknown>) => (
+										<div key={String(project.id)} className="mb-6 last:mb-0">
+											<Link href={`/dashboard/projects/${String(project.id)}`} className="group block">
 												<div className="border border-slate-200 rounded-lg p-4 hover:shadow-md hover:border-slate-300 transition-all duration-200">
 												<div className="flex items-start justify-between">
 													<div className="flex-1">
 														<div className="flex items-center gap-3 mb-2">
 															<div className={`w-3 h-3 rounded-full ${
-																project.status === 'completed' ? 'bg-green-500' : 
-																project.status === 'in-progress' ? 'bg-blue-500' : 'bg-slate-400'
+																String(project.status) === 'completed' ? 'bg-green-500' : 
+																String(project.status) === 'in-progress' ? 'bg-blue-500' : 'bg-slate-400'
 															}`} />
 															<h4 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
-																{project.name}
+																{String(project.name)}
 															</h4>
 														</div>
 														
@@ -342,25 +342,25 @@ export default function DashboardHome() {
 																	 project.status === 'in-progress' ? 'In Progress' : 'Planning'}
 																</span>
 															</div>
-															{project.price && (
+															{Boolean(project.price) && (
 																<div className="flex items-center gap-1">
 																	<DollarSign className="h-3 w-3" />
 																	<span>
-																		${project.price}{project.price_type === 'hourly' ? '/hr' : ''}
+																		${String(project.price)}{String(project.price_type) === 'hourly' ? '/hr' : ''}
 																	</span>
 																</div>
 															)}
-															{project.deadline && (
+															{Boolean(project.deadline) && (
 																<div className="flex items-center gap-1">
 																	<Calendar className="h-3 w-3" />
-																	<span>{new Date(project.deadline).toLocaleDateString()}</span>
+																	<span>{new Date(String(project.deadline)).toLocaleDateString()}</span>
 																</div>
 															)}
 														</div>
 
-														{project.description && (
+														{Boolean(project.description) && (
 															<p className="text-sm text-slate-600 line-clamp-2 mb-3">
-																{project.description}
+																{String(project.description)}
 															</p>
 														)}
 
@@ -369,18 +369,18 @@ export default function DashboardHome() {
 																{project.tasks_count !== undefined && (
 																	<div className="flex items-center gap-1 text-slate-500">
 																		<CheckCircle2 className="h-3 w-3" />
-																		<span>{project.completed_tasks || 0}/{project.tasks_count} tasks</span>
+																		<span>{Number(project.completed_tasks || 0)}/{Number(project.tasks_count)} tasks</span>
 																	</div>
 																)}
-																{project.total_hours !== undefined && project.total_hours > 0 && (
+																{project.total_hours !== undefined && Number(project.total_hours) > 0 && (
 																	<div className="flex items-center gap-1 text-slate-500">
 																		<Timer className="h-3 w-3" />
 																		<span>
-																			{project.total_hours >= 1 
-																				? `${Math.floor(project.total_hours)}h ${Math.round((project.total_hours % 1) * 60)}m`.replace(' 0m', '')
-																				: project.total_hours >= (1/60)
-																				? `${Math.round(project.total_hours * 60)}m`
-																				: `${Math.round(project.total_hours * 3600)}s`
+																			{Number(project.total_hours) >= 1 
+																				? `${Math.floor(Number(project.total_hours))}h ${Math.round((Number(project.total_hours) % 1) * 60)}m`.replace(' 0m', '')
+																				: Number(project.total_hours) >= (1/60)
+																				? `${Math.round(Number(project.total_hours) * 60)}m`
+																				: `${Math.round(Number(project.total_hours) * 3600)}s`
 																			}
 																		</span>
 																	</div>

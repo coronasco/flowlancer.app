@@ -92,7 +92,7 @@ export default function AdminActivity() {
 	// Fetch activity data
 	const { data: activityData, isLoading, refetch } = useQuery({
 		queryKey: ["admin-activity-detailed", timeFilter],
-		queryFn: () => api<Record<string, unknown>>(`/api/admin/activity?timeFilter=${timeFilter}`, undefined, user),
+		queryFn: () => api<Record<string, unknown>>(`/api/admin/activity?timeFilter=${timeFilter}`, undefined, user || undefined),
 		enabled: !!user && isAdmin,
 		refetchInterval: 10000, // Refresh every 10 seconds
 	});
@@ -336,7 +336,7 @@ export default function AdminActivity() {
 											<p className="text-sm font-medium text-slate-900 truncate">
 												{String(activity.actionLabel || '')}
 											</p>
-											{(activity.metadata as Record<string, unknown>)?.amount && (
+											{Boolean((activity.metadata as Record<string, unknown>)?.amount) && (
 												<Badge variant="outline" className="text-xs">
 													${String((activity.metadata as Record<string, unknown>)?.amount || '')}
 												</Badge>
@@ -346,7 +346,7 @@ export default function AdminActivity() {
 											<span>{String(activity.userEmail || '')}</span>
 											<span>•</span>
 											<span>{String(activity.target || '')}</span>
-											{(activity.metadata as Record<string, unknown>)?.status && (
+											{Boolean((activity.metadata as Record<string, unknown>)?.status) && (
 												<>
 													<span>•</span>
 													<span className="capitalize">{String((activity.metadata as Record<string, unknown>)?.status || '')}</span>

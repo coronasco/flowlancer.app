@@ -28,7 +28,7 @@ export function Providers({ children }: ProvidersProps) {
 			client.getQueryCache().subscribe((event) => {
 				if (event?.type === 'updated' && event.action?.type === 'success') {
 					const queryKey = event.query.queryKey.join(' > ');
-					const duration = event.action.meta?.fetchTime || 0;
+					const duration = (event.action as { meta?: { fetchTime?: number } }).meta?.fetchTime || 0;
 					if (duration > 300) {
 						console.info(`🐌 Slow query (${duration}ms): ${queryKey}`);
 					}

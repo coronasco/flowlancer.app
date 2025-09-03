@@ -30,7 +30,7 @@ export const POST = withAuth(async (req, { userId }) => {
 
     // Get project tasks for context
     const tasks = await listTasks(userId, projectId);
-    const todoTasks = tasks.filter(t => t.status === "Todo");
+    const todoTasks = tasks.filter(t => t.status === "Backlog");
     const inProgressTasks = tasks.filter(t => t.status === "In Progress");
     const doneTasks = tasks.filter(t => t.status === "Done");
 
@@ -45,7 +45,7 @@ export const POST = withAuth(async (req, { userId }) => {
     // Generate proposal using AI-like logic (placeholder implementation)
     const proposal = generateProposalContent({
       project: effectiveProject,
-      tasks: { todo: todoTasks, inProgress: inProgressTasks, done: doneTasks },
+      tasks: { todo: todoTasks.map(t => ({...t, order: t.order || 0})), inProgress: inProgressTasks.map(t => ({...t, order: t.order || 0})), done: doneTasks.map(t => ({...t, order: t.order || 0})) },
       profile,
       options: { includeTimeline, includePricing, tone },
       brief
@@ -196,7 +196,7 @@ function generateProposalContent({
   proposalContent += `- **Transparency:** Real-time project visibility and regular updates\n`;
   proposalContent += `- **Quality Focus:** Thorough review process before final delivery\n`;
   
-  if (profile?.experience || profile?.skills) {
+  if ((profile as Record<string, unknown>)?.experience || (profile as Record<string, unknown>)?.skills) {
     proposalContent += `- **Expertise:** Experienced in relevant technologies and methodologies\n`;
   }
   

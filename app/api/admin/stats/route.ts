@@ -18,8 +18,7 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 		}
 
 		// Get real data from Firebase and Supabase
-		// const { createClient } = await import("@supabase/supabase-js");
-		// const supabase = createClient(...) would be used here for real data
+		// Real data would be fetched here
 		
 		// Get stats from Firebase (users)
 		const usersSnapshot = await adminSdk.firestore().collection("customers").get();
@@ -35,6 +34,7 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 		});
 		
 		// Get stats from Supabase - use same config as other working APIs
+		const { createClient } = await import("@supabase/supabase-js");
 		const supabaseAdmin = createClient(
 			process.env.NEXT_PUBLIC_SUPABASE_URL!,
 			process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -48,12 +48,12 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 
 		
 		const totalProjects = projectsResult.count || 0;
-		const activeProjects = projectsResult.data?.filter(p => p.status === "in-progress" || p.status === "planning").length || 0;
+		const activeProjects = projectsResult.data?.filter((p: Record<string, unknown>) => p.status === "in-progress" || p.status === "planning").length || 0;
 		
 		const totalInvoices = invoicesResult.count || 0;
-		const paidInvoices = invoicesResult.data?.filter(i => i.status === "paid").length || 0;
-		const totalRevenue = invoicesResult.data?.reduce((sum, invoice) => {
-			return invoice.status === "paid" ? sum + parseFloat(invoice.total_amount || "0") : sum;
+		const paidInvoices = invoicesResult.data?.filter((i: Record<string, unknown>) => i.status === "paid").length || 0;
+		const totalRevenue = invoicesResult.data?.reduce((sum: number, invoice: Record<string, unknown>) => {
+			return invoice.status === "paid" ? sum + parseFloat(String(invoice.total_amount) || "0") : sum;
 		}, 0) || 0;
 		
 		// Calculate some additional metrics
@@ -95,4 +95,4 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 	}
 }
 
-export const GET = withAuth(handler);
+export const GET = withAuth(handler as (req: Request, session: Record<string, unknown>) => Promise<Response>);

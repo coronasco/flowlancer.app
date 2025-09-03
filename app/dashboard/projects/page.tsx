@@ -179,25 +179,25 @@ export default function ProjectsPage() {
 
 
 							{/* Project Cards - Simple and elegant */}
-							{projects.map((project) => (
-								<Link key={project.id} href={`/dashboard/projects/${project.id}`} className="group">
+							{projects.map((project: Record<string, unknown>) => (
+								<Link key={String(project.id)} href={`/dashboard/projects/${String(project.id)}`} className="group">
 									<div className="bg-white border border-slate-200 rounded-lg p-6 hover:shadow-lg hover:border-slate-300 transition-all duration-200">
 										<div className="flex items-start justify-between mb-4">
 											<div className="bg-slate-100 p-2 rounded-lg">
 												<Folder className="h-5 w-5 text-slate-600" />
 											</div>
-											<span className={`px-2 py-1 rounded-md text-xs font-medium ${getStatusColor(project.status || 'planning')}`}>
-												{project.status ? project.status.replace('-', ' ') : 'planning'}
+											<span className={`px-2 py-1 rounded-md text-xs font-medium ${getStatusColor(String(project.status || 'planning'))}`}>
+												{String(project.status || 'planning').replace('-', ' ')}
 											</span>
 										</div>
 										
 										<h3 className="font-semibold text-lg text-slate-900 mb-2 group-hover:text-slate-700 transition-colors line-clamp-1">
-											{project.name}
+											{String(project.name)}
 										</h3>
 										
-										{project.description && (
+										{Boolean(project.description) && (
 											<p className="text-slate-600 text-sm mb-4 line-clamp-1">
-												{project.description}
+												{String(project.description)}
 											</p>
 										)}
 										
@@ -208,18 +208,18 @@ export default function ProjectsPage() {
 													<span>Rate</span>
 												</div>
 												<span className="text-sm font-semibold text-slate-900">
-													${project.price || 0}{(project.price_type || 'hourly') === 'hourly' ? '/hr' : ''}
+													${Number(project.price || 0)}{(project.price_type || 'hourly') === 'hourly' ? '/hr' : ''}
 												</span>
 											</div>
 											
-											{project.deadline && (
+											{Boolean(project.deadline) && (
 												<div className="flex items-center justify-between">
 													<div className="flex items-center text-sm text-slate-500">
 														<Calendar className="h-4 w-4 mr-2" />
 														<span>Deadline</span>
 													</div>
 													<span className="text-sm font-medium text-slate-700">
-														{new Date(project.deadline).toLocaleDateString()}
+														{new Date(String(project.deadline)).toLocaleDateString()}
 													</span>
 												</div>
 											)}
@@ -230,7 +230,7 @@ export default function ProjectsPage() {
 													<span>Created</span>
 												</div>
 												<span className="text-sm text-slate-500">
-													{project.created_at ? new Date(project.created_at).toLocaleDateString() : 'Recently'}
+													{project.created_at ? new Date(String(project.created_at)).toLocaleDateString() : 'Recently'}
 												</span>
 											</div>
 										</div>

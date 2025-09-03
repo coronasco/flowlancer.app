@@ -23,13 +23,6 @@ export function ClientPortalModal({ projectId }: ClientPortalModalProps) {
 	const [portalUrl, setPortalUrl] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
 
-	// Load existing share token on modal open
-	useEffect(() => {
-		if (isOpen && user) {
-			loadShareToken();
-		}
-	}, [isOpen, user, projectId, loadShareToken]);
-
 	const loadShareToken = useCallback(async () => {
 		if (!user) return;
 		
@@ -57,6 +50,13 @@ export function ClientPortalModal({ projectId }: ClientPortalModalProps) {
 			setLoading(false);
 		}
 	}, [user, projectId]);
+
+	// Load existing share token on modal open
+	useEffect(() => {
+		if (isOpen && user) {
+			loadShareToken();
+		}
+	}, [isOpen, user, projectId, loadShareToken]);
 
 	const generateLink = async () => {
 		if (!user) return;

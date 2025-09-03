@@ -18,8 +18,7 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 		}
 
 		// Get real activity data from Firebase and Supabase
-		// const { createClient } = await import("@supabase/supabase-js");
-		// const supabase = createClient(...) would be used here for real data
+		// Real data would be fetched here
 		
 		// Get all users from Firebase to map UIDs to emails
 		const usersSnapshot = await adminSdk.firestore().collection("customers").get();
@@ -53,6 +52,7 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 		
 		const timeAgoISO = timeAgo.toISOString();
 		// Use admin access for Supabase
+		const { createClient } = await import("@supabase/supabase-js");
 		const supabaseAdmin = createClient(
 			process.env.NEXT_PUBLIC_SUPABASE_URL!,
 			process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -152,4 +152,4 @@ async function handler(req: NextRequest, { uid }: { userId: string; role: string
 	}
 }
 
-export const GET = withAuth(handler);
+export const GET = withAuth(handler as (req: Request, session: Record<string, unknown>) => Promise<Response>);
