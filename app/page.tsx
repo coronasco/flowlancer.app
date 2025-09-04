@@ -1,16 +1,16 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { 
-  ArrowRight, 
-  Users, 
-  Clock, 
-  FileText, 
-  BarChart3,
+import {
+  ArrowRight,
+  Users,
+  Clock,
+  FileText,
   Shield,
   Zap
 } from "lucide-react";
 import { Footer } from "@/components/layout/Footer";
+import { DashboardTabs } from "@/components/landing/DashboardTabs";
 
 export const metadata: Metadata = {
   title: "Flowlancer - The Complete Freelance Management Platform | Project Management, Time Tracking & Invoicing",
@@ -52,38 +52,7 @@ export const metadata: Metadata = {
   },
 };
 
-const features = [
-  {
-    icon: BarChart3,
-    title: "Project Management",
-    description: "Organize your work with beautiful Kanban boards, task tracking, and milestone management.",
-  },
-  {
-    icon: Clock,
-    title: "Time Tracking", 
-    description: "Track time with precision, generate detailed reports, and improve your productivity insights.",
-  },
-  {
-    icon: FileText,
-    title: "Smart Invoicing",
-    description: "Create professional invoices automatically from tracked time and completed tasks.",
-  },
-  {
-    icon: Users,
-    title: "Client Collaboration",
-    description: "Share project progress with clients through secure portals and real-time updates.",
-  },
-  {
-    icon: Shield,
-    title: "Secure & Private",
-    description: "Enterprise-grade security with data encryption and privacy controls built-in.",
-  },
-  {
-    icon: Zap,
-    title: "Workflow Automation",
-    description: "Automate repetitive tasks and focus on what matters most - your creative work.",
-  }
-];
+// Features array removed as it's not used in the current design
 
 export default function HomePage() {
   return (
@@ -109,93 +78,357 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-6">
-              Professional freelance
-              <span className="block">management platform</span>
+      <section className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-50"></div>
+        <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-blue-100/40 to-purple-100/40 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-green-100/40 to-blue-100/40 rounded-full blur-3xl"></div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto mb-16">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 mb-8 leading-tight">
+              The Complete
+              <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+                Freelance Platform
+              </span>
             </h1>
             
-            <p className="text-lg sm:text-xl text-slate-600 mb-8 leading-relaxed max-w-3xl mx-auto">
-              Streamline your freelance workflow with project management, time tracking, 
-              professional invoicing, and client collaboration tools.
+            <p className="text-lg sm:text-xl lg:text-2xl text-slate-600 mb-12 leading-relaxed max-w-3xl mx-auto">
+              Transform your freelance business with professional project management, 
+              intelligent time tracking, automated invoicing, and seamless client collaboration.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Link 
                 href="/login"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium"
+                className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
-                Get Started Free
-                <ArrowRight className="h-5 w-5" />
+                Start Free Today
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link 
                 href="/pricing"
-                className="inline-flex items-center justify-center px-8 py-4 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors font-medium"
+                className="inline-flex items-center justify-center px-8 py-4 border-2 border-slate-200 text-slate-700 rounded-xl hover:border-slate-300 hover:bg-slate-50 transition-all duration-200 font-semibold text-lg"
               >
                 View Pricing
               </Link>
             </div>
             
-            <div className="text-sm text-slate-500">
-              Free to start • No credit card required
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-slate-500">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                Free to start
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                No credit card required
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                Setup in 2 minutes
+              </div>
             </div>
+          </div>
+          
+          {/* Interactive Dashboard Demo */}
+          <div className="relative max-w-7xl mx-auto">
+            <DashboardTabs />
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-slate-50">
+      <section className="py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
-              Everything you need to succeed
+          <div className="text-center mb-20">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+              Everything you need to
+              <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                succeed as a freelancer
+              </span>
             </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Professional tools to manage your freelance business efficiently
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+              From project inception to final payment, Flowlancer provides all the professional 
+              tools you need to run a successful freelance business.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="p-6 bg-white border border-slate-200 rounded-lg">
-                <feature.icon className="h-8 w-8 text-slate-700 mb-4" />
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                  {feature.title}
+          <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
+            {/* Project Management */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+              <div className="relative bg-white p-8 rounded-2xl border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-6">
+                  <FileText className="h-7 w-7 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">
+                  Project Management
                 </h3>
-                <p className="text-slate-600">
-                  {feature.description}
+                <p className="text-slate-600 mb-6 leading-relaxed">
+                  Organize your work with intuitive Kanban boards, track progress, and manage deadlines with ease.
+                </p>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3 text-slate-600">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    Drag & drop Kanban boards
+                  </li>
+                  <li className="flex items-center gap-3 text-slate-600">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    AI-powered task generation
+                  </li>
+                  <li className="flex items-center gap-3 text-slate-600">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    Client collaboration portal
+                  </li>
+                  <li className="flex items-center gap-3 text-slate-600">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    Progress tracking & reporting
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Time Tracking */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+              <div className="relative bg-white p-8 rounded-2xl border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-6">
+                  <Clock className="h-7 w-7 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">
+                  Smart Time Tracking
+                </h3>
+                <p className="text-slate-600 mb-6 leading-relaxed">
+                  Track time effortlessly with one-click timers, visual indicators, and automatic calculations.
+                </p>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3 text-slate-600">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    One-click start/stop timers
+                  </li>
+                  <li className="flex items-center gap-3 text-slate-600">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    Visual REC recording indicator
+                  </li>
+                  <li className="flex items-center gap-3 text-slate-600">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    Automatic earnings calculation
+                  </li>
+                  <li className="flex items-center gap-3 text-slate-600">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    Detailed time analytics
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Professional Invoicing */}
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+              <div className="relative bg-white p-8 rounded-2xl border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                <div className="w-14 h-14 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-6">
+                  <FileText className="h-7 w-7 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">
+                  Professional Invoicing
+                </h3>
+                <p className="text-slate-600 mb-6 leading-relaxed">
+                  Generate beautiful, professional invoices automatically from your tracked time and projects.
+                </p>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3 text-slate-600">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                    Auto-generate from projects
+                  </li>
+                  <li className="flex items-center gap-3 text-slate-600">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                    Professional templates
+                  </li>
+                  <li className="flex items-center gap-3 text-slate-600">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                    Payment status tracking
+                  </li>
+                  <li className="flex items-center gap-3 text-slate-600">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                    Export to PDF instantly
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Section */}
+      <section className="py-20 bg-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Why choose Flowlancer?
+            </h2>
+            <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+              Built specifically for modern freelancers who want to focus on their craft
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Shield className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4">Secure & Reliable</h3>
+              <p className="text-slate-300 leading-relaxed">
+                Enterprise-grade security with 99.9% uptime guarantee. Your data is always safe and accessible.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Zap className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4">Simple & Powerful</h3>
+              <p className="text-slate-300 leading-relaxed">
+                No learning curve required. Start managing your freelance business professionally in minutes.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Users className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4">Built for Freelancers</h3>
+              <p className="text-slate-300 leading-relaxed">
+                Every feature is designed with freelancers in mind. From time tracking to client collaboration.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-20 lg:py-32 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+              Get started in
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> 3 simple steps</span>
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              No learning curve, no complexity. Start managing your freelance business professionally in minutes.
+            </p>
+          </div>
+          
+          <div className="relative">
+            {/* Connection lines */}
+            <div className="hidden lg:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-blue-200 via-purple-200 to-green-200 transform -translate-y-1/2"></div>
+            
+            <div className="grid lg:grid-cols-3 gap-12 lg:gap-8 relative">
+              {/* Step 1 */}
+              <div className="text-center group">
+                <div className="relative inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl mb-8 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <Users className="h-10 w-10 text-white" />
+                  <div className="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+                    <span className="text-sm font-bold text-blue-600">1</span>
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">Setup Your Profile</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Create your professional profile with skills, experience, and let our AI suggest optimal hourly rates based on market data.
                 </p>
               </div>
-            ))}
+
+              {/* Step 2 */}
+              <div className="text-center group">
+                <div className="relative inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl mb-8 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <FileText className="h-10 w-10 text-white" />
+                  <div className="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+                    <span className="text-sm font-bold text-purple-600">2</span>
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">Create Projects</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Add your projects, let AI generate tasks, track time with visual indicators, and share progress with clients through the portal.
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="text-center group">
+                <div className="relative inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl mb-8 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <Zap className="h-10 w-10 text-white" />
+                  <div className="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+                    <span className="text-sm font-bold text-green-600">3</span>
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">Get Paid Fast</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Generate professional invoices automatically, track payments, and watch your earnings grow with our comprehensive dashboard.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">
-            Ready to get started?
+      <section className="relative py-20 lg:py-32 overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-green-500/10"></div>
+        
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 text-white rounded-full text-sm font-medium mb-8">
+            <Zap className="h-4 w-4" />
+            Start your freelance transformation today
+          </div>
+          
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+            Ready to transform your
+            <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-green-400 bg-clip-text text-transparent">
+              freelance business?
+            </span>
           </h2>
-          <p className="text-xl text-slate-600 mb-8">
-            Join thousands of freelancers managing their business with Flowlancer.
+          
+          <p className="text-xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+            Streamline your workflow, increase your earnings, and build stronger client relationships 
+            with our comprehensive freelance management platform.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
             <Link 
               href="/login"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium"
+              className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-slate-900 rounded-xl hover:bg-slate-100 transition-all duration-200 font-bold text-lg shadow-2xl hover:shadow-3xl transform hover:-translate-y-1"
             >
-              Get Started Free
-              <ArrowRight className="h-5 w-5" />
+              Start Free Today
+              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link 
               href="/pricing"
-              className="inline-flex items-center justify-center px-8 py-4 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors font-medium"
+              className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/30 text-white rounded-xl hover:border-white/50 hover:bg-white/10 transition-all duration-200 font-semibold text-lg backdrop-blur-sm"
             >
-              View Pricing
+              View Pricing Plans
             </Link>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Shield className="h-6 w-6 text-white" />
+              </div>
+              <div className="text-white font-semibold mb-1">Secure & Private</div>
+              <div className="text-slate-400 text-sm">Enterprise-grade security</div>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Clock className="h-6 w-6 text-white" />
+              </div>
+              <div className="text-white font-semibold mb-1">Always Available</div>
+              <div className="text-slate-400 text-sm">99.9% uptime guarantee</div>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Users className="h-6 w-6 text-white" />
+              </div>
+              <div className="text-white font-semibold mb-1">Expert Support</div>
+              <div className="text-slate-400 text-sm">Dedicated customer success</div>
+            </div>
           </div>
         </div>
       </section>

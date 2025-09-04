@@ -72,7 +72,7 @@ export function Footer() {
               <span className="text-slate-500">Made for freelancers, by freelancers</span>
             </div>
             <div className="text-xs sm:text-sm text-slate-400">
-              © 2024 Flowlancer
+              © 2025 Flowlancer
             </div>
           </div>
         </div>
