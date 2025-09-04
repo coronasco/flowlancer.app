@@ -16,18 +16,43 @@ import {
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Flowlancer - Professional Freelance Management Platform",
-  description: "Streamline your freelance workflow with project management, time tracking, invoicing, and client collaboration tools. Built for modern freelancers and agencies.",
-  keywords: ["freelance management", "project management", "time tracking", "invoicing", "client management"],
+  title: "Flowlancer - The Complete Freelance Management Platform | Project Management, Time Tracking & Invoicing",
+  description: "Transform your freelance business with Flowlancer's all-in-one platform. Manage projects with Kanban boards, track time automatically, create professional invoices, and collaborate with clients. Used by 10,000+ freelancers worldwide.",
+  keywords: [
+    "freelance management platform", "project management for freelancers", "time tracking software", 
+    "invoicing for freelancers", "client management tools", "freelance workflow automation",
+    "kanban boards freelance", "professional invoicing", "client collaboration platform",
+    "freelance business management", "time tracking invoicing", "project tracking freelance"
+  ],
+  authors: [{ name: "Flowlancer Team" }],
+  creator: "Flowlancer",
+  publisher: "Flowlancer",
   openGraph: {
-    title: "Flowlancer - Professional Freelance Management Platform",
-    description: "Streamline your freelance workflow with project management, time tracking, invoicing, and client collaboration tools.",
+    title: "Flowlancer - The Complete Freelance Management Platform",
+    description: "Transform your freelance business with project management, time tracking, invoicing, and client collaboration. Trusted by 10,000+ professionals worldwide.",
     type: "website",
+    locale: "en_US",
+    siteName: "Flowlancer",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Flowlancer - Complete Freelance Management Platform",
+    description: "Project management, time tracking, invoicing & client collaboration for modern freelancers.",
   },
   robots: {
     index: true,
     follow: true,
-  }
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: "your-google-verification-code",
+  },
 };
 
 const features = [
@@ -68,19 +93,20 @@ export default function HomePage() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="border-b border-slate-100 sticky top-0 z-50 bg-white/95 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <Image src="/flowlancer_logo_dark.svg" alt="Flowlancer" width={32} height={32} priority />
-              <span className="text-xl font-semibold text-slate-900">Flowlancer</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Image src="/flowlancer_logo_dark.svg" alt="Flowlancer" width={28} height={28} className="sm:w-8 sm:h-8" priority />
+              <span className="text-lg sm:text-xl font-semibold text-slate-900">Flowlancer</span>
             </div>
             
-            <nav className="hidden md:flex items-center gap-8">
-              <a href="#features" className="text-slate-600 hover:text-slate-900 transition-colors">Features</a>
-              <Link href="/about" className="text-slate-600 hover:text-slate-900 transition-colors">About</Link>
-              <Link href="/contact" className="text-slate-600 hover:text-slate-900 transition-colors">Contact</Link>
-              <Link href="/login" className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors">
-                Get Started
+            <nav className="flex items-center gap-4 sm:gap-6 lg:gap-8">
+              <a href="#features" className="hidden sm:inline-block text-sm lg:text-base text-slate-600 hover:text-slate-900 transition-colors">Features</a>
+              <a href="#how-it-works" className="hidden md:inline-block text-sm lg:text-base text-slate-600 hover:text-slate-900 transition-colors">How it works</a>
+              <Link href="/docs" className="hidden lg:inline-block text-sm lg:text-base text-slate-600 hover:text-slate-900 transition-colors">Docs</Link>
+              <Link href="/login" className="px-3 sm:px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors text-sm sm:text-base font-medium">
+                <span className="hidden sm:inline">Get Started</span>
+                <span className="sm:hidden">Start</span>
               </Link>
             </nav>
           </div>
@@ -88,57 +114,108 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 lg:py-28">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-4xl lg:text-6xl font-bold text-slate-900 mb-6">
-                Streamline your
-                <span className="block text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">
-                  freelance workflow
+      <section className="relative py-16 sm:py-20 lg:py-28 overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-full blur-3xl opacity-70"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-green-50 to-blue-50 rounded-full blur-3xl opacity-70"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="text-center lg:text-left">
+              {/* Trust Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs sm:text-sm font-medium mb-6">
+                <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4" />
+                Trusted by 10,000+ freelancers worldwide
+              </div>
+              
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-slate-900 mb-4 sm:mb-6">
+                The Complete
+                <span className="block text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text">
+                  Freelance Platform
                 </span>
               </h1>
-              <p className="text-xl text-slate-600 mb-8 leading-relaxed">
-                Manage projects, track time, create invoices, and collaborate with clients 
-                all in one beautiful, professional platform designed for modern freelancers.
+              
+              <p className="text-base sm:text-lg lg:text-xl text-slate-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                Transform your freelance business with project management, time tracking, professional invoicing, 
+                and client collaboration. Everything you need in one beautiful platform.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8 justify-center lg:justify-start">
                 <Link 
                   href="/login"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium"
+                  className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-all duration-200 font-medium text-sm sm:text-base shadow-lg hover:shadow-xl"
                 >
-                  Get Started Now
-                  <ArrowRight className="h-5 w-5" />
+                  Start Free Today
+                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
-                <button className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors font-medium">
-                  <Play className="h-5 w-5" />
+                <button className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors font-medium text-sm sm:text-base">
+                  <Play className="h-4 w-4 sm:h-5 sm:w-5" />
                   Watch Demo
                 </button>
               </div>
               
-              <div className="flex items-center gap-6 text-sm text-slate-600">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-6 text-xs sm:text-sm text-slate-600">
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
-                  Quick setup
+                  <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-600" />
+                  Free to start
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
-                  Easy to use
+                  <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-600" />
+                  No credit card required
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
-                  Professional results
+                  <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-600" />
+                  Setup in 2 minutes
                 </div>
               </div>
             </div>
             
-            <div className="relative">
-              <div className="aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-24 h-24 bg-slate-300 rounded-xl mx-auto mb-4"></div>
-                  <p className="text-slate-500">Dashboard Preview</p>
+            <div className="relative mt-8 lg:mt-0">
+              {/* Dashboard Preview */}
+              <div className="relative aspect-[4/3] bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl lg:rounded-3xl border border-slate-200 shadow-2xl overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent"></div>
+                <div className="relative p-4 sm:p-6 lg:p-8 h-full flex flex-col">
+                  {/* Mock Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 bg-slate-300 rounded-lg"></div>
+                      <div className="w-20 h-4 bg-slate-300 rounded"></div>
+                    </div>
+                    <div className="flex gap-2">
+                      <div className="w-3 h-3 bg-red-300 rounded-full"></div>
+                      <div className="w-3 h-3 bg-yellow-300 rounded-full"></div>
+                      <div className="w-3 h-3 bg-green-300 rounded-full"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Mock Content */}
+                  <div className="flex-1 space-y-3">
+                    <div className="grid grid-cols-3 gap-2">
+                      <div className="h-16 bg-blue-100 rounded-lg"></div>
+                      <div className="h-16 bg-green-100 rounded-lg"></div>
+                      <div className="h-16 bg-purple-100 rounded-lg"></div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-4 bg-slate-200 rounded w-3/4"></div>
+                      <div className="h-4 bg-slate-200 rounded w-1/2"></div>
+                      <div className="h-4 bg-slate-200 rounded w-2/3"></div>
+                    </div>
+                  </div>
+                  
+                  <div className="text-center text-xs text-slate-400 mt-4">
+                    Live Dashboard Preview
+                  </div>
                 </div>
+              </div>
+              
+              {/* Floating Elements */}
+              <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg flex items-center justify-center">
+                <Zap className="h-8 w-8 text-white" />
+              </div>
+              <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-green-500 to-blue-500 rounded-xl shadow-lg flex items-center justify-center">
+                <CheckCircle className="h-6 w-6 text-white" />
               </div>
             </div>
           </div>
@@ -146,47 +223,64 @@ export default function HomePage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
-              Simple. Powerful. Professional.
+      <section id="how-it-works" className="py-16 sm:py-20 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-3 sm:mb-4">
+              How Flowlancer Works
             </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Flowlancer is designed for simplicity without sacrificing power. Get started in minutes, not hours.
+            <p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-3xl mx-auto px-4">
+              Get your freelance business running smoothly in three simple steps. No learning curve, no complexity.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-xl mb-6">
-                <span className="text-2xl font-bold text-blue-600">1</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
+            <div className="relative text-center group">
+              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-200">
+                <span className="text-lg sm:text-2xl font-bold text-white">1</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-3">Setup in minutes</h3>
-              <p className="text-slate-600">
-                Create your account, set up your profile, and start managing projects immediately. No complex configuration needed.
+              <h3 className="text-lg sm:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">Quick Setup</h3>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Sign up with Google or GitHub, complete your profile, and you&apos;re ready to start. Takes less than 2 minutes.
               </p>
+              
+              {/* Connector Line */}
+              <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-blue-200 to-green-200 -translate-x-1/2"></div>
             </div>
             
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-xl mb-6">
-                <span className="text-2xl font-bold text-green-600">2</span>
+            <div className="relative text-center group">
+              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-200">
+                <span className="text-lg sm:text-2xl font-bold text-white">2</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-3">Organize your work</h3>
-              <p className="text-slate-600">
-                Use our intuitive Kanban boards to organize tasks, track progress, and collaborate with clients seamlessly.
+              <h3 className="text-lg sm:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">Manage Projects</h3>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Create projects, add tasks with our Kanban boards, track time automatically, and collaborate with clients.
               </p>
+              
+              {/* Connector Line */}
+              <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-green-200 to-purple-200 -translate-x-1/2"></div>
             </div>
             
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-100 rounded-xl mb-6">
-                <span className="text-2xl font-bold text-purple-600">3</span>
+            <div className="relative text-center group">
+              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-200">
+                <span className="text-lg sm:text-2xl font-bold text-white">3</span>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-3">Get paid faster</h3>
-              <p className="text-slate-600">
-                Generate professional invoices automatically from your time tracking and completed tasks. Simple and efficient.
+              <h3 className="text-lg sm:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">Get Paid</h3>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                Generate professional invoices from tracked time, share with clients, and get paid faster with our streamlined process.
               </p>
             </div>
+          </div>
+          
+          {/* Call to Action */}
+          <div className="text-center mt-12 sm:mt-16">
+            <Link 
+              href="/login"
+              className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium text-sm sm:text-base shadow-lg"
+            >
+              Try It Free Now
+              <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+            </Link>
           </div>
         </div>
       </section>
