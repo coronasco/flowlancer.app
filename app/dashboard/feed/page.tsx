@@ -79,7 +79,10 @@ export default function FeedPage() {
 		getNextPageParam: (lastPage) => lastPage.hasMore ? lastPage.nextCursor : undefined,
 		initialPageParam: null as string | null,
 		enabled: !!user,
-		staleTime: 30_000, // Cache for 30 seconds
+		staleTime: 60_000, // Cache for 60 seconds (increased)
+		gcTime: 300_000, // Keep in cache for 5 minutes
+		refetchOnWindowFocus: false, // Prevent excessive refetches
+		refetchOnMount: false, // Only fetch if data is stale
 	});
 	
 	// Flatten all pages into a single posts array
@@ -88,24 +91,35 @@ export default function FeedPage() {
 	const isLoading = loadingPosts;
 
 
-	// Load user profile data from Firestore
+	// Load user profile data from Firestore with cleanup
 	useEffect(() => {
+		let isMounted = true;
+		
 		if (!user) return;
+		
 		const loadProfile = async () => {
 			try {
 				const { getFirestore, doc, getDoc } = await import("firebase/firestore");
 				const db = getFirestore();
 				const docSnap = await getDoc(doc(db, "customers", user.uid));
-				if (docSnap.exists()) {
+				
+				if (docSnap.exists() && isMounted) {
 					const data = docSnap.data();
 					setName(data.name || "");
 					setAvatarUrl(data.avatarUrl || user.photoURL || "");
 				}
 			} catch (error) {
-				console.error("Error loading profile:", error);
+				if (isMounted) {
+					console.error("Error loading profile:", error);
+				}
 			}
 		};
+		
 		loadProfile();
+		
+		return () => {
+			isMounted = false;
+		};
 	}, [user]);
 
 	const { mutate: post } = useMutation({
@@ -397,7 +411,9 @@ function CommentButton({ postId, commentsCount, onComment, isExpanded }: { postI
 		},
 		initialPageParam: 0,
 		enabled: showComments && !!user,
-		staleTime: 30000,
+		staleTime: 60000, // Cache for 60 seconds
+		gcTime: 300_000, // Keep in cache for 5 minutes
+		refetchOnWindowFocus: false, // Prevent excessive refetches
 	});
 
 	const allComments = useMemo(() => 
@@ -412,41 +428,71 @@ function CommentButton({ postId, commentsCount, onComment, isExpanded }: { postI
 	);
 
 	useEffect(() => {
+		let isMounted = true;
+		
 		const loadCommentUserData = async () => {
-			if (uniqueUserEmails.length > 0 && user) {
+			if (uniqueUserEmails.length > 0 && user && isMounted) {
 				try {
 					const { getFirestore, query, collection, where, getDocs } = await import("firebase/firestore");
 					const db = getFirestore();
 					
-					const newAvatars = new Map(userAvatars);
-					const newNames = new Map(userNames);
-					
-					for (const userEmail of uniqueUserEmails) {
-						if (!newAvatars.has(userEmail) && userEmail) {
-							const usersQuery = query(collection(db, "customers"), where("email", "==", userEmail));
-							const querySnapshot = await getDocs(usersQuery);
-							
-							if (!querySnapshot.empty) {
-								const userData = querySnapshot.docs[0].data();
-								if (userData.avatarUrl) {
-									newAvatars.set(userEmail, userData.avatarUrl);
+					// Load data for new users only
+					const loadPromises = uniqueUserEmails.map(async (userEmail) => {
+						if (userEmail && isMounted) {
+							try {
+								const usersQuery = query(collection(db, "customers"), where("email", "==", userEmail));
+								const querySnapshot = await getDocs(usersQuery);
+								
+								if (!querySnapshot.empty && isMounted) {
+									const userData = querySnapshot.docs[0].data();
+									
+									if (userData.avatarUrl && isMounted) {
+										setUserAvatars(prev => {
+											if (!prev.has(userEmail)) {
+												const newMap = new Map(prev);
+												newMap.set(userEmail, userData.avatarUrl);
+												return newMap;
+											}
+											return prev;
+										});
+									}
+									
+									if (userData.name && isMounted) {
+										setUserNames(prev => {
+											if (!prev.has(userEmail)) {
+												const newMap = new Map(prev);
+												newMap.set(userEmail, userData.name);
+												return newMap;
+											}
+											return prev;
+										});
+									}
 								}
-								if (userData.name) {
-									newNames.set(userEmail, userData.name);
+							} catch (error) {
+								if (isMounted) {
+									console.error(`Error loading user data for ${userEmail}:`, error);
 								}
 							}
 						}
-					}
+					});
 					
-					setUserAvatars(newAvatars);
-					setUserNames(newNames);
+					if (isMounted) {
+						await Promise.all(loadPromises);
+					}
 				} catch (error) {
-					console.error("Error loading comment user data:", error);
+					if (isMounted) {
+						console.error("Error loading comment user data:", error);
+					}
 				}
 			}
 		};
+		
 		loadCommentUserData();
-	}, [uniqueUserEmails, user, userAvatars, userNames]);
+		
+		return () => {
+			isMounted = false;
+		};
+	}, [uniqueUserEmails, user]);
 
 	return (
 		<div className="flex flex-col">
@@ -605,8 +651,10 @@ function PostCard({
 	const initial = (displayName[0] || "U").toUpperCase();
 	const isOwner = currentUser?.email === post.userId;
 
-	// Load user data from Firestore
+	// Load user data from Firestore with cleanup
 	useEffect(() => {
+		let isMounted = true;
+		
 		const loadUserData = async () => {
 			if (post.userId && currentUser) {
 				try {
@@ -617,22 +665,29 @@ function PostCard({
 					const usersQuery = query(collection(db, "customers"), where("email", "==", post.userId));
 					const querySnapshot = await getDocs(usersQuery);
 					
-					if (!querySnapshot.empty) {
+					if (!querySnapshot.empty && isMounted) {
 						const userDoc = querySnapshot.docs[0];
 						const userData = userDoc.data();
-						if (userData.avatarUrl) {
+						if (userData.avatarUrl && isMounted) {
 							setUserAvatar(userData.avatarUrl);
 						}
-						if (userData.name) {
+						if (userData.name && isMounted) {
 							setUserName(userData.name);
 						}
 					}
 				} catch (error) {
-					console.error("Error loading user data:", error);
+					if (isMounted) {
+						console.error("Error loading user data:", error);
+					}
 				}
 			}
 		};
+		
 		loadUserData();
+		
+		return () => {
+			isMounted = false;
+		};
 	}, [post.userId, currentUser]);
 
 	const handleEdit = () => {
