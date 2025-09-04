@@ -236,52 +236,52 @@ export default function FeedPage() {
 		<div className="min-h-screen bg-white">
 			{/* Header Section - Full Width */}
 			<div className="border-b border-slate-100 bg-white">
-				<div className="py-6">
-					<div className="flex items-center justify-between">
-						<div>
-							<h1 className="text-3xl font-semibold text-slate-900">Community Feed</h1>
-							<p className="text-slate-600 mt-1">Connect with fellow freelancers and share your journey</p>
+				<div className="py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
+					<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+						<div className="min-w-0 flex-1">
+							<h1 className="text-2xl sm:text-3xl font-semibold text-slate-900">Community Feed</h1>
+							<p className="text-slate-600 mt-1 text-sm sm:text-base">Connect with fellow freelancers and share your journey</p>
 						</div>
-
 					</div>
 				</div>
 			</div>
 
 			{/* Main Content - 2 Columns */}
-			<div className="py-8">
-				<div className="grid lg:grid-cols-3 gap-8">
+			<div className="py-6 sm:py-8">
+				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
 					{/* Left Column - Feed */}
-					<div className="lg:col-span-2 space-y-6">
+					<div className="lg:col-span-2 space-y-4 sm:space-y-6">
 						{/* Post Composer */}
-						<div className="bg-white border border-slate-100 rounded-lg p-6">
-							<div className="flex items-start gap-4">
-								<Avatar className="h-10 w-10">
+						<div className="bg-white border border-slate-100 rounded-lg p-4 sm:p-6">
+							<div className="flex items-start gap-3 sm:gap-4">
+								<Avatar className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0">
 									{avatarUrl && <AvatarImage src={avatarUrl} alt={name || "User"} />}
-									<AvatarFallback className="bg-slate-100 text-slate-600">
+									<AvatarFallback className="bg-slate-100 text-slate-600 text-xs sm:text-sm">
 										{name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || 'U'}
 									</AvatarFallback>
 								</Avatar>
-								<div className="flex-1">
+								<div className="flex-1 min-w-0">
 									<textarea 
 										value={text} 
 										onChange={(e) => setText(e.target.value)} 
 										placeholder="Share an update, milestone, ask for advice, or add useful links..." 
-										className="w-full min-h-[120px] p-4 border border-slate-200 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent text-sm"
+										className="w-full min-h-[100px] sm:min-h-[120px] p-3 sm:p-4 border border-slate-200 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent text-sm"
 										maxLength={500}
 									/>
-									<div className="flex items-center justify-between mt-4">
-										<div className="flex items-center gap-2 text-xs text-slate-500">
-											<span>Share your wins, challenges, insights, or helpful resources</span>
-											<span className={`ml-2 ${text.length > 450 ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
+									<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-3 sm:mt-4 gap-2 sm:gap-0">
+										<div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 text-xs text-slate-500 order-2 sm:order-1">
+											<span className="hidden sm:inline">Share your wins, challenges, insights, or helpful resources</span>
+											<span className="sm:hidden">Share updates, tips, or resources</span>
+											<span className={`${text.length > 450 ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
 												{text.length}/500
 											</span>
 										</div>
 										<Button 
 											onClick={() => text.trim() && post()} 
 											disabled={!text.trim() || text.length > 500}
-											className="px-6 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors disabled:bg-slate-400"
+											className="px-4 sm:px-6 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors disabled:bg-slate-400 text-sm order-1 sm:order-2 w-full sm:w-auto"
 										>
-											<Plus className="h-4 w-4 mr-2" />
+											<Plus className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
 											Post
 										</Button>
 									</div>
@@ -291,22 +291,22 @@ export default function FeedPage() {
 
 						{/* Posts */}
 						{isLoading ? (
-							<div className="space-y-6">
+							<div className="space-y-4 sm:space-y-6">
 								{Array.from({ length: 3 }).map((_, i) => (
-									<div key={i} className="bg-white border border-slate-100 rounded-lg p-6">
-										<div className="flex items-start gap-4">
-											<Skeleton className="h-10 w-10 rounded-full" />
-											<div className="flex-1 space-y-3">
+									<div key={i} className="bg-white border border-slate-100 rounded-lg p-4 sm:p-6">
+										<div className="flex items-start gap-3 sm:gap-4">
+											<Skeleton className="h-8 w-8 sm:h-10 sm:w-10 rounded-full flex-shrink-0" />
+											<div className="flex-1 space-y-2 sm:space-y-3 min-w-0">
 												<div className="flex items-center gap-2">
-													<Skeleton className="h-4 w-24" />
-													<Skeleton className="h-3 w-16" />
+													<Skeleton className="h-3 w-16 sm:h-4 sm:w-24" />
+													<Skeleton className="h-3 w-12 sm:h-3 sm:w-16" />
 												</div>
-												<Skeleton className="h-4 w-full" />
-												<Skeleton className="h-4 w-4/5" />
-												<Skeleton className="h-4 w-3/5" />
-												<div className="flex items-center gap-4 pt-3 mt-4 border-t border-slate-100">
-													<Skeleton className="h-4 w-12" />
-													<Skeleton className="h-4 w-16" />
+												<Skeleton className="h-3 w-full sm:h-4" />
+												<Skeleton className="h-3 w-4/5 sm:h-4" />
+												<Skeleton className="h-3 w-3/5 sm:h-4" />
+												<div className="flex items-center gap-3 sm:gap-4 pt-2 sm:pt-3 mt-3 sm:mt-4 border-t border-slate-100">
+													<Skeleton className="h-3 w-8 sm:h-4 sm:w-12" />
+													<Skeleton className="h-3 w-12 sm:h-4 sm:w-16" />
 												</div>
 											</div>
 										</div>
@@ -314,19 +314,19 @@ export default function FeedPage() {
 								))}
 							</div>
 						) : posts.length === 0 ? (
-							<div className="bg-white border border-slate-100 rounded-lg p-12 text-center">
-								<div className="text-slate-400 mb-4">
-									<MessageCircle className="h-12 w-12 mx-auto" />
+							<div className="bg-white border border-slate-100 rounded-lg p-8 sm:p-12 text-center">
+								<div className="text-slate-400 mb-3 sm:mb-4">
+									<MessageCircle className="h-10 w-10 sm:h-12 sm:w-12 mx-auto" />
 								</div>
-								<h3 className="text-lg font-medium text-slate-900 mb-2">No posts yet</h3>
-								<p className="text-slate-500 text-sm">Be the first to share an update with the community!</p>
+								<h3 className="text-base sm:text-lg font-medium text-slate-900 mb-2">No posts yet</h3>
+								<p className="text-slate-500 text-sm px-4">Be the first to share an update with the community!</p>
 							</div>
 						) : (
 							<>
 								<ErrorBoundary 
 									onReset={() => qc.invalidateQueries({ queryKey: ["posts", "infinite"] })}
 								>
-									<div className="space-y-4">
+									<div className="space-y-3 sm:space-y-4">
 										{posts.map((p) => (
 											<PostCard 
 												key={p.id}
@@ -341,11 +341,12 @@ export default function FeedPage() {
 									</div>
 								</ErrorBoundary>
 								{hasNextPage && (
-									<div className="text-center">
+									<div className="text-center pt-2 sm:pt-4">
 										<Button 
 											onClick={() => fetchNextPage()}
 											variant="outline"
 											disabled={isFetchingNextPage}
+											className="w-full sm:w-auto px-4 sm:px-6 py-2 text-sm"
 										>
 											{isFetchingNextPage ? "Loading..." : "Load more posts"}
 										</Button>
@@ -356,9 +357,7 @@ export default function FeedPage() {
 					</div>
 
 					{/* Right Column - Sidebar */}
-					<div className="space-y-6">
-
-
+					<div className="hidden lg:block space-y-6">
 						{/* Trending Topics - Real Data */}
 						<TrendingTopics posts={posts} />
 
@@ -454,15 +453,15 @@ function CommentButton({ postId, commentsCount, onComment, isExpanded }: { postI
 			{!isExpanded && (
 				<button 
 					onClick={() => setShowComments(!showComments)}
-					className="flex items-center gap-2 text-sm text-slate-500 hover:text-blue-500 transition-colors"
+					className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-slate-500 hover:text-blue-500 transition-colors"
 				>
-					<MessageCircle className="h-4 w-4" />
+					<MessageCircle className="h-3 w-3 sm:h-4 sm:w-4" />
 					<span>{commentsCount} {commentsCount === 1 ? 'Comment' : 'Comments'}</span>
 				</button>
 			)}
 			
 			{(showComments || isExpanded) && (
-				<div className="mt-3 space-y-3">
+				<div className="mt-2 sm:mt-3 space-y-2 sm:space-y-3">
 					{/* Comment Input */}
 					<div className="space-y-1">
 						<div className="flex items-center gap-2">
@@ -471,7 +470,7 @@ function CommentButton({ postId, commentsCount, onComment, isExpanded }: { postI
 								placeholder="Add a comment..."
 								value={commentText}
 								onChange={(e) => setCommentText(e.target.value)}
-								className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
+								className="flex-1 px-2 sm:px-3 py-2 border border-slate-200 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
 								maxLength={300}
 								onKeyDown={(e) => {
 									if (e.key === 'Enter' && commentText.trim() && commentText.length <= 300) {
@@ -492,7 +491,7 @@ function CommentButton({ postId, commentsCount, onComment, isExpanded }: { postI
 									}
 								}}
 								disabled={!commentText.trim() || commentText.length > 300}
-								className="px-3 py-2 bg-slate-900 text-white rounded-lg text-sm hover:bg-slate-800 disabled:opacity-50 transition-colors"
+								className="px-2 sm:px-3 py-2 bg-slate-900 text-white rounded-lg text-xs sm:text-sm hover:bg-slate-800 disabled:opacity-50 transition-colors"
 							>
 								Post
 							</button>
@@ -508,14 +507,14 @@ function CommentButton({ postId, commentsCount, onComment, isExpanded }: { postI
 
 					{/* Comments List */}
 					{loadingComments ? (
-						<div className="space-y-3">
+						<div className="space-y-2 sm:space-y-3">
 							{Array.from({ length: 2 }).map((_, i) => (
-								<div key={i} className="flex items-start gap-3 py-2">
-									<Skeleton className="h-7 w-7 rounded-full" />
-									<div className="flex-1 space-y-2">
+								<div key={i} className="flex items-start gap-2 sm:gap-3 py-2">
+									<Skeleton className="h-6 w-6 sm:h-7 sm:w-7 rounded-full flex-shrink-0" />
+									<div className="flex-1 space-y-1 sm:space-y-2 min-w-0">
 										<div className="flex items-center gap-2">
-											<Skeleton className="h-3 w-16" />
-											<Skeleton className="h-3 w-12" />
+											<Skeleton className="h-3 w-12 sm:w-16" />
+											<Skeleton className="h-3 w-8 sm:w-12" />
 										</div>
 										<Skeleton className="h-3 w-full" />
 										<Skeleton className="h-3 w-3/4" />
@@ -524,15 +523,15 @@ function CommentButton({ postId, commentsCount, onComment, isExpanded }: { postI
 							))}
 						</div>
 					) : allComments.length > 0 ? (
-						<div className="space-y-2">
+						<div className="space-y-1 sm:space-y-2">
 							{allComments.map((comment) => {
 								const userName = userNames.get(comment.userId) || "";
 								const displayName = userName || comment.userId?.split("@")[0] || "user";
 								const initial = (displayName[0] || "U").toUpperCase();
 								const avatarUrl = userAvatars.get(comment.userId) || "";
 								return (
-									<div key={comment.id} className="flex items-start gap-2 py-2">
-										<Avatar className="h-7 w-7">
+									<div key={comment.id} className="flex items-start gap-2 py-1 sm:py-2">
+										<Avatar className="h-6 w-6 sm:h-7 sm:w-7 flex-shrink-0">
 											{avatarUrl ? (
 												<AvatarImage src={avatarUrl} alt={displayName} />
 											) : null}
@@ -541,9 +540,9 @@ function CommentButton({ postId, commentsCount, onComment, isExpanded }: { postI
 											</AvatarFallback>
 										</Avatar>
 										<div className="flex-1 min-w-0">
-											<div className="flex items-center gap-2 mb-1">
-												<span className="text-sm font-medium text-slate-900">{displayName}</span>
-												<span className="text-xs text-slate-500">
+											<div className="flex items-center gap-1 sm:gap-2 mb-1">
+												<span className="text-xs sm:text-sm font-medium text-slate-900 truncate">{displayName}</span>
+												<span className="text-xs text-slate-500 flex-shrink-0">
 													{new Date(comment.createdAt).toLocaleDateString('en-US', {
 														day: 'numeric',
 														month: 'short',
@@ -552,7 +551,7 @@ function CommentButton({ postId, commentsCount, onComment, isExpanded }: { postI
 													})}
 												</span>
 											</div>
-											<p className="text-sm text-slate-700 leading-relaxed">{comment.text}</p>
+											<p className="text-xs sm:text-sm text-slate-700 leading-relaxed break-words">{comment.text}</p>
 										</div>
 									</div>
 								);
@@ -564,7 +563,7 @@ function CommentButton({ postId, commentsCount, onComment, isExpanded }: { postI
 									<button
 										onClick={() => fetchNextPage()}
 										disabled={isFetchingNextPage}
-										className="text-sm text-slate-600 hover:text-slate-900 font-medium disabled:opacity-50 transition-colors"
+										className="text-xs sm:text-sm text-slate-600 hover:text-slate-900 font-medium disabled:opacity-50 transition-colors"
 									>
 										{isFetchingNextPage ? "Loading..." : "Load more comments..."}
 									</button>
@@ -572,7 +571,7 @@ function CommentButton({ postId, commentsCount, onComment, isExpanded }: { postI
 							)}
 						</div>
 					) : (
-						<p className="text-sm text-slate-500 italic">No comments yet.</p>
+						<p className="text-xs sm:text-sm text-slate-500 italic">No comments yet.</p>
 					)}
 				</div>
 			)}
@@ -650,20 +649,20 @@ function PostCard({
 	};
 
 	return (
-		<div className="border border-slate-100 p-6 rounded-lg bg-white hover:shadow-md transition-all duration-200">
+		<div className="border border-slate-100 p-4 sm:p-6 rounded-lg bg-white hover:shadow-md transition-all duration-200">
 			{/* Header */}
-			<div className="flex items-start justify-between mb-4">
-				<div className="flex items-center gap-3">
-					<Avatar className="h-10 w-10">
+			<div className="flex items-start justify-between mb-3 sm:mb-4">
+				<div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+					<Avatar className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0">
 						{userAvatar ? (
 							<AvatarImage src={userAvatar} alt={displayName} />
 						) : null}
-						<AvatarFallback className="bg-slate-100 text-slate-600 font-medium">
+						<AvatarFallback className="bg-slate-100 text-slate-600 font-medium text-xs sm:text-sm">
 							{initial}
 						</AvatarFallback>
 					</Avatar>
-					<div>
-						<h4 className="font-medium text-slate-900">{displayName}</h4>
+					<div className="min-w-0 flex-1">
+						<h4 className="font-medium text-slate-900 text-sm sm:text-base truncate">{displayName}</h4>
 						<p className="text-xs text-slate-500">
 							{new Date(post.createdAt).toLocaleDateString('en-US', {
 								day: 'numeric',
@@ -677,22 +676,22 @@ function PostCard({
 
 				{/* Owner Actions Dropdown */}
 				{isOwner && (
-					<div className="relative">
+					<div className="relative flex-shrink-0">
 						<button 
 							onClick={() => setShowDropdown(!showDropdown)}
 							className="p-1 hover:bg-slate-100 rounded-lg transition-colors"
 						>
-							<MoreHorizontal className="h-4 w-4 text-slate-400" />
+							<MoreHorizontal className="h-3 w-3 sm:h-4 sm:w-4 text-slate-400" />
 						</button>
 						
 						{showDropdown && (
-							<div className="absolute right-0 top-8 w-40 bg-white border border-slate-200 rounded-lg shadow-lg z-50">
+							<div className="absolute right-0 top-6 sm:top-8 w-32 sm:w-40 bg-white border border-slate-200 rounded-lg shadow-lg z-50">
 								<button
 									onClick={() => {
 										setIsEditing(true);
 										setShowDropdown(false);
 									}}
-									className="w-full px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 rounded-t-lg"
+									className="w-full px-2 sm:px-3 py-2 text-left text-xs sm:text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 rounded-t-lg"
 								>
 									<Pencil className="h-3 w-3" />
 									Edit
@@ -700,7 +699,7 @@ function PostCard({
 								<hr className="border-slate-100" />
 								<button
 									onClick={handleDelete}
-									className="w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 rounded-b-lg"
+									className="w-full px-2 sm:px-3 py-2 text-left text-xs sm:text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 rounded-b-lg"
 								>
 									<Trash2 className="h-3 w-3" />
 									Delete
@@ -712,9 +711,9 @@ function PostCard({
 			</div>
 
 			{/* Content */}
-			<div className="mb-4">
+			<div className="mb-3 sm:mb-4">
 				{isEditing ? (
-					<div className="space-y-3">
+					<div className="space-y-2 sm:space-y-3">
 						<textarea
 							value={editText}
 							onChange={(e) => setEditText(e.target.value)}
@@ -723,24 +722,24 @@ function PostCard({
 							placeholder="Share your thoughts, insights, or helpful links..."
 							maxLength={500}
 						/>
-						<div className="flex items-center justify-between">
-							<span className={`text-xs ${editText.length > 450 ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
+						<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+							<span className={`text-xs order-2 sm:order-1 ${editText.length > 450 ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
 								{editText.length}/500
 							</span>
-							<div className="flex items-center gap-2">
+							<div className="flex items-center gap-2 w-full sm:w-auto order-1 sm:order-2">
 								<button
 									onClick={() => {
 										setIsEditing(false);
 										setEditText(post.text);
 									}}
-									className="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+									className="px-3 py-1.5 text-xs sm:text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors flex-1 sm:flex-none"
 								>
 									Cancel
 								</button>
 								<button
 									onClick={handleEdit}
 									disabled={!editText.trim() || editText.length > 500}
-									className="px-3 py-1.5 text-sm bg-slate-900 text-white rounded-lg hover:bg-slate-800 disabled:opacity-50 transition-colors"
+									className="px-3 py-1.5 text-xs sm:text-sm bg-slate-900 text-white rounded-lg hover:bg-slate-800 disabled:opacity-50 transition-colors flex-1 sm:flex-none"
 								>
 									Save
 								</button>
@@ -779,25 +778,25 @@ function PostCard({
 			</div>
 
 			{/* Actions */}
-			<div className="flex items-center justify-between pt-3 border-t border-slate-100">
-				<div className="flex items-center gap-4">
+			<div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-slate-100">
+				<div className="flex items-center gap-3 sm:gap-4">
 					<button 
 						onClick={onLike}
-						className={`flex items-center gap-1.5 text-sm transition-colors ${
+						className={`flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm transition-colors ${
 							post.isLiked 
 								? 'text-red-500' 
 								: 'text-slate-500 hover:text-red-500'
 						}`}
 					>
-						<Heart className={`h-4 w-4 ${post.isLiked ? 'fill-current' : ''}`} />
+						<Heart className={`h-3 w-3 sm:h-4 sm:w-4 ${post.isLiked ? 'fill-current' : ''}`} />
 						<span>{post.likesCount || 0}</span>
 					</button>
 					
 					<button 
 						onClick={() => setShowComments(!showComments)}
-						className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-blue-500 transition-colors"
+						className="flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm text-slate-500 hover:text-blue-500 transition-colors"
 					>
-						<MessageCircle className="h-4 w-4" />
+						<MessageCircle className="h-3 w-3 sm:h-4 sm:w-4" />
 						<span>{post.commentsCount || 0}</span>
 					</button>
 				</div>
@@ -805,7 +804,7 @@ function PostCard({
 
 			{/* Comments Section */}
 			{showComments && (
-				<div className="mt-4 pt-4 border-t border-slate-100">
+				<div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-100">
 					<CommentButton 
 						postId={post.id} 
 						commentsCount={post.commentsCount || 0} 
