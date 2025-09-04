@@ -177,7 +177,7 @@ export default function PortalPage({
 			await refreshData();
 			setCommentText("");
 			setSelectedTask(null);
-			toast.success("Comment submitted successfully!");
+			toast.success("Comment submitted successfully! The freelancer has been notified.");
 
 		} catch (err) {
 			toast.error((err as Error).message);
@@ -214,7 +214,7 @@ export default function PortalPage({
 			await refreshData();
 			setShowFeedback(false);
 			setFeedbackComment("");
-			toast.success("Thank you for your feedback!");
+			toast.success("Thank you for your feedback! It has been saved and will appear on the freelancer's profile.");
 
 		} catch (err) {
 			toast.error((err as Error).message);
