@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, User, FolderKanban, Receipt, Newspaper, Settings, Shield, BarChart3, Users, Activity, BookOpen, MessageSquare } from "lucide-react";
+import { Home, User, FolderKanban, Receipt, Newspaper, Settings, Shield, BarChart3, Users, Activity, BookOpen, MessageSquare, Briefcase } from "lucide-react";
 import {
   Sidebar as UISidebar,
   SidebarContent,
@@ -26,6 +26,7 @@ const mainNavItems = [
 	{ href: "/dashboard/profile", label: "Profile", Icon: User },
 	{ href: "/dashboard/projects", label: "Projects", Icon: FolderKanban },
 	{ href: "/dashboard/invoices", label: "Invoices", Icon: Receipt },
+	{ href: "/dashboard/jobs", label: "Find Jobs", Icon: Briefcase },
 	{ href: "/dashboard/feed", label: "Feed", Icon: Newspaper },
 ];
 
