@@ -314,26 +314,26 @@ export default function ProfilePage() {
 		<div className="min-h-screen bg-white">
 			{/* Header Section - Full Width */}
 			<div className="border-b border-slate-100 bg-white">
-				<div className="py-6">
-					<div className="flex items-center justify-between">
+				<div className="py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
+					<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
 						<div>
-							<h1 className="text-3xl font-semibold text-slate-900">Profile</h1>
-							<p className="text-slate-600 mt-1">Manage your professional information</p>
+							<h1 className="text-2xl sm:text-3xl font-semibold text-slate-900">Profile</h1>
+							<p className="text-slate-600 mt-1 text-sm sm:text-base">Manage your professional information</p>
 						</div>
 						{email && (
-							<div className="flex items-center gap-3">
+							<div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
 								{/* Profile Visibility Toggle */}
 								<Button
 									onClick={handleToggleVisibility}
 									disabled={isUpdatingVisibility}
 									variant={isPublic ? "default" : "outline"}
 									size="sm"
-									className="inline-flex items-center gap-2"
+									className="inline-flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-3"
 								>
 									{isUpdatingVisibility ? (
-										<div className="w-4 h-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+										<div className="w-3 h-3 sm:w-4 sm:h-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
 									) : (
-										<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 											{isPublic ? (
 												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
 											) : (
@@ -341,7 +341,8 @@ export default function ProfilePage() {
 											)}
 										</svg>
 									)}
-									{isPublic ? "Public" : "Private"}
+									<span className="hidden sm:inline">{isPublic ? "Public" : "Private"}</span>
+									<span className="sm:hidden">{isPublic ? "Pub" : "Priv"}</span>
 								</Button>
 
 								{/* View Public Profile Button */}
@@ -353,7 +354,7 @@ export default function ProfilePage() {
 									trigger={
 										<Link 
 											href={`/p/${publicSlug}`} 
-											className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+											className={`inline-flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 ${
 												isPublic 
 													? "text-slate-700 bg-slate-100 hover:bg-slate-200" 
 													: "text-slate-400 bg-slate-50 cursor-not-allowed"
@@ -363,10 +364,11 @@ export default function ProfilePage() {
 												toast.info("Make your profile public first to view it");
 											} : undefined}
 										>
-											<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
 											</svg>
-											View Public Profile
+											<span className="hidden sm:inline">View Public Profile</span>
+											<span className="sm:hidden">View</span>
 										</Link>
 									}
 								/>
@@ -377,13 +379,13 @@ export default function ProfilePage() {
 			</div>
 
 			{/* Main Profile Content */}
-			<div className="py-8">
-				<div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
+			<div className="py-6 sm:py-8">
+				<div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-6 sm:gap-8">
 					{/* Profile Summary - Left Side */}
-					<div className="xl:col-span-2">
-						<div className="sticky top-20 space-y-6">
+					<div className="lg:col-span-1 xl:col-span-2">
+						<div className="lg:sticky lg:top-20 space-y-4 sm:space-y-6">
 							{/* Profile Card */}
-							<div className="bg-white rounded-lg p-8 border border-slate-100">
+							<div className="bg-white rounded-lg p-4 sm:p-6 lg:p-8 border border-slate-100">
 							<div className="flex flex-col items-center text-center">
 								<OnboardingCoachmark
 									step={1}

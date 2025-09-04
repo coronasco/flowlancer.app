@@ -132,37 +132,37 @@ export default function DashboardHome() {
 		<div className="min-h-screen bg-white">
 			{/* Header Section - Full Width */}
 			<div className="border-b border-slate-100 bg-white">
-				<div className="py-6">
+				<div className="py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
 					{/* Hidden Onboarding Stepper - Progress shown in modals only */}
 
-					<div className="flex items-center justify-between">
+					<div className="flex flex-col sm:flex-row items-center justify-between gap-4">
 						<OnboardingCoachmark
 							step={0}
 							title="Welcome to Flowlancer!"
 							description="Let's get you set up with everything you need to manage your freelance business. We'll walk you through setting up your profile, configuring your rates, and creating your first project."
 							actionText="Get Started"
 							trigger={
-								<div className="flex items-center gap-4">
-									<Avatar className="h-24 w-24">
+								<div className="flex items-center gap-3 sm:gap-4">
+									<Avatar className="h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24">
 										{avatarUrl && <AvatarImage src={avatarUrl} alt={name || "User"} />}
-										<AvatarFallback className="bg-slate-100 text-slate-600">
+										<AvatarFallback className="bg-slate-100 text-slate-600 text-lg sm:text-xl lg:text-2xl">
 											{name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || 'U'}
 										</AvatarFallback>
 									</Avatar>
-									<div>
-										<h1 className="text-3xl font-semibold text-slate-900">
+									<div className="text-center sm:text-left">
+										<h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900">
 											Welcome back{name ? `, ${name.split(' ')[0]}` : ''}!
 										</h1>
-										<p className="text-slate-600 mt-1">Here&apos;s your freelance overview</p>
+										<p className="text-slate-600 mt-1 text-sm sm:text-base">Here&apos;s your freelance overview</p>
 									</div>
 								</div>
 							}
 						/>
 						
 						<Link href="/dashboard/projects">
-							<Button className="bg-slate-50 flex flex-col items-center justify-center border-slate-200 text-dark p-12 rounded-lg hover:bg-emerald-200 hover:text-emerald-700 transition-colors">
-								<Plus className="h-12 w-12" />
-								<span className="text-xs">New Project</span>
+							<Button className="bg-slate-50 flex flex-col items-center justify-center border-slate-200 text-dark p-6 sm:p-8 lg:p-12 rounded-lg hover:bg-emerald-200 hover:text-emerald-700 transition-colors">
+								<Plus className="h-6 w-6 sm:h-8 sm:w-8 lg:h-12 lg:w-12" />
+								<span className="text-xs sm:text-sm mt-1">New Project</span>
 							</Button>
 						</Link>
 						
@@ -171,50 +171,50 @@ export default function DashboardHome() {
 			</div>
 
 			{/* Main Dashboard Content */}
-			<div className="py-8">
+			<div className="py-6 sm:py-8 ">
 				{/* Stats Overview */}
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-					<div className="bg-white border border-slate-100 rounded-lg p-6">
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+					<div className="bg-white border border-slate-100 rounded-lg p-4 sm:p-6">
 						<div className="flex items-center justify-between">
 							<div>
-								<p className="text-sm text-slate-600">Active Projects</p>
-								<p className="text-2xl font-semibold text-slate-900">{activeProjects}</p>
+								<p className="text-xs sm:text-sm text-slate-600">Active Projects</p>
+								<p className="text-xl sm:text-2xl font-semibold text-slate-900">{activeProjects}</p>
 							</div>
-							<div className="p-3 bg-blue-100 rounded-lg">
-								<Folder className="h-6 w-6 text-blue-600" />
+							<div className="p-2 sm:p-3 bg-blue-100 rounded-lg">
+								<Folder className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
 							</div>
 						</div>
 					</div>
 
-					<div className="bg-white border border-slate-100 rounded-lg p-6">
+					<div className="bg-white border border-slate-100 rounded-lg p-4 sm:p-6">
 						<div className="flex items-center justify-between">
 							<div>
-								<p className="text-sm text-slate-600">Completed</p>
-								<p className="text-2xl font-semibold text-slate-900">{completedProjects}</p>
+								<p className="text-xs sm:text-sm text-slate-600">Completed</p>
+								<p className="text-xl sm:text-2xl font-semibold text-slate-900">{completedProjects}</p>
 							</div>
-							<div className="p-3 bg-green-100 rounded-lg">
-								<Star className="h-6 w-6 text-green-600" />
+							<div className="p-2 sm:p-3 bg-green-100 rounded-lg">
+								<Star className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
 							</div>
 						</div>
 					</div>
 
-					<div className="bg-white border border-slate-100 rounded-lg p-6">
+					<div className="bg-white border border-slate-100 rounded-lg p-4 sm:p-6">
 						<div className="flex items-center justify-between">
 							<div>
-								<p className="text-sm text-slate-600">Total Earnings</p>
-								<p className="text-2xl font-semibold text-slate-900">${totalEarnings.toFixed(2)}</p>
+								<p className="text-xs sm:text-sm text-slate-600">Total Earnings</p>
+								<p className="text-xl sm:text-2xl font-semibold text-slate-900">${totalEarnings.toFixed(2)}</p>
 							</div>
-							<div className="p-3 bg-green-100 rounded-lg">
-								<DollarSign className="h-6 w-6 text-green-600" />
+							<div className="p-2 sm:p-3 bg-green-100 rounded-lg">
+								<DollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
 							</div>
 						</div>
 					</div>
 
-					<div className="bg-white border border-slate-100 rounded-lg p-6">
+					<div className="bg-white border border-slate-100 rounded-lg p-4 sm:p-6">
 						<div className="flex items-center justify-between">
 							<div>
-								<p className="text-sm text-slate-600">Hours Tracked</p>
-								<p className="text-2xl font-semibold text-slate-900">
+								<p className="text-xs sm:text-sm text-slate-600">Hours Tracked</p>
+								<p className="text-xl sm:text-2xl font-semibold text-slate-900">
 									{totalHours >= 1 
 										? `${Math.floor(totalHours)}h ${Math.round((totalHours % 1) * 60)}m`.replace(' 0m', '')
 										: totalHours >= (1/60)
@@ -225,93 +225,93 @@ export default function DashboardHome() {
 									}
 								</p>
 							</div>
-							<div className="p-3 bg-purple-100 rounded-lg">
-								<Clock className="h-6 w-6 text-purple-600" />
+							<div className="p-2 sm:p-3 bg-purple-100 rounded-lg">
+								<Clock className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
 							</div>
 						</div>
 					</div>
 				</div>
 
 				{/* Quick Actions & Recent Activity */}
-				<div className="grid lg:grid-cols-3 gap-8">
+				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
 					{/* Left Column - Quick Actions */}
-					<div className="lg:col-span-2 space-y-6">
+					<div className="lg:col-span-2 space-y-4 sm:space-y-6">
 						{/* Quick Actions */}
-						<div className="bg-white border border-slate-100 rounded-lg p-6">
-							<h3 className="font-semibold text-slate-900 mb-4 flex items-center gap-2">
-								<Activity className="h-5 w-5" />
+						<div className="bg-white border border-slate-100 rounded-lg p-4 sm:p-6">
+							<h3 className="font-semibold text-slate-900 mb-3 sm:mb-4 flex items-center gap-2 text-base sm:text-lg">
+								<Activity className="h-4 w-4 sm:h-5 sm:w-5" />
 								Quick Actions
 							</h3>
-							<div className="grid md:grid-cols-2 gap-4">
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 								<Link href="/dashboard/projects" className="group">
-									<div className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition-all duration-200 group-hover:border-slate-300">
-										<div className="flex items-center gap-3 mb-2">
-											<div className="p-2 bg-blue-100 rounded-lg">
-												<Plus className="h-5 w-5 text-blue-600" />
+									<div className="border border-slate-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-all duration-200 group-hover:border-slate-300">
+										<div className="flex items-center gap-2 sm:gap-3 mb-2">
+											<div className="p-1.5 sm:p-2 bg-blue-100 rounded-lg">
+												<Plus className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
 											</div>
-											<h4 className="font-medium text-slate-900">Create Project</h4>
+											<h4 className="font-medium text-slate-900 text-sm sm:text-base">Create Project</h4>
 										</div>
-										<p className="text-sm text-slate-600">Start a new project and organize your tasks</p>
+										<p className="text-xs sm:text-sm text-slate-600">Start a new project and organize your tasks</p>
 									</div>
 								</Link>
 
 								<Link href="/dashboard/profile" className="group">
-									<div className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition-all duration-200 group-hover:border-slate-300">
-										<div className="flex items-center gap-3 mb-2">
-											<div className="p-2 bg-purple-100 rounded-lg">
-												<Users className="h-5 w-5 text-purple-600" />
+									<div className="border border-slate-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-all duration-200 group-hover:border-slate-300">
+										<div className="flex items-center gap-2 sm:gap-3 mb-2">
+											<div className="p-1.5 sm:p-2 bg-purple-100 rounded-lg">
+												<Users className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600" />
 											</div>
-											<h4 className="font-medium text-slate-900">Update Profile</h4>
+											<h4 className="font-medium text-slate-900 text-sm sm:text-base">Update Profile</h4>
 										</div>
-										<p className="text-sm text-slate-600">Manage your skills and hourly rate</p>
+										<p className="text-xs sm:text-sm text-slate-600">Manage your skills and hourly rate</p>
 									</div>
 								</Link>
 
 								<Link href="/dashboard/feed" className="group">
-									<div className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition-all duration-200 group-hover:border-slate-300">
-										<div className="flex items-center gap-3 mb-2">
-											<div className="p-2 bg-green-100 rounded-lg">
-												<Activity className="h-5 w-5 text-green-600" />
+									<div className="border border-slate-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-all duration-200 group-hover:border-slate-300">
+										<div className="flex items-center gap-2 sm:gap-3 mb-2">
+											<div className="p-1.5 sm:p-2 bg-green-100 rounded-lg">
+												<Activity className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
 											</div>
-											<h4 className="font-medium text-slate-900">Share Update</h4>
+											<h4 className="font-medium text-slate-900 text-sm sm:text-base">Share Update</h4>
 										</div>
-										<p className="text-sm text-slate-600">Connect with the freelancer community</p>
+										<p className="text-xs sm:text-sm text-slate-600">Connect with the freelancer community</p>
 									</div>
 								</Link>
 
 								<Link href="/dashboard/invoices" className="group">
-									<div className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition-all duration-200 group-hover:border-slate-300">
-										<div className="flex items-center gap-3 mb-2">
-											<div className="p-2 bg-amber-100 rounded-lg">
-												<FileText className="h-5 w-5 text-amber-600" />
+									<div className="border border-slate-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-all duration-200 group-hover:border-slate-300">
+										<div className="flex items-center gap-2 sm:gap-3 mb-2">
+											<div className="p-1.5 sm:p-2 bg-amber-100 rounded-lg">
+												<FileText className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600" />
 											</div>
-											<h4 className="font-medium text-slate-900">Create Invoice</h4>
+											<h4 className="font-medium text-slate-900 text-sm sm:text-base">Create Invoice</h4>
 										</div>
-										<p className="text-sm text-slate-600">Generate professional invoices</p>
+										<p className="text-xs sm:text-sm text-slate-600">Generate professional invoices</p>
 									</div>
 								</Link>
 							</div>
 						</div>
 
 						{/* Recent Projects */}
-						<div className="bg-white border border-slate-100 rounded-lg p-6">
-							<div className="flex items-center justify-between mb-4">
-								<h3 className="font-semibold text-slate-900 flex items-center gap-2">
-									<Folder className="h-5 w-5" />
+						<div className="bg-white border border-slate-100 rounded-lg p-4 sm:p-6">
+							<div className="flex items-center justify-between mb-3 sm:mb-4">
+								<h3 className="font-semibold text-slate-900 flex items-center gap-2 text-base sm:text-lg">
+									<Folder className="h-4 w-4 sm:h-5 sm:w-5" />
 									Recent Projects
 								</h3>
-								<Link href="/dashboard/projects" className="text-sm text-slate-500 hover:text-slate-700 transition-colors">
+								<Link href="/dashboard/projects" className="text-xs sm:text-sm text-slate-500 hover:text-slate-700 transition-colors">
 									View all
 								</Link>
 							</div>
 							{projects.length === 0 ? (
-								<div className="text-center py-8">
+								<div className="text-center py-6 sm:py-8">
 									<div className="text-slate-400 mb-2">
-										<Folder className="h-8 w-8 mx-auto" />
+										<Folder className="h-6 w-6 sm:h-8 sm:w-8 mx-auto" />
 									</div>
-									<p className="text-sm text-slate-500">No projects yet</p>
+									<p className="text-xs sm:text-sm text-slate-500">No projects yet</p>
 									<Link href="/dashboard/projects">
-										<Button className="mt-3 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors">
+										<Button className="mt-2 sm:mt-3 px-3 sm:px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors text-xs sm:text-sm">
 											Create your first project
 										</Button>
 									</Link>
@@ -400,21 +400,21 @@ export default function DashboardHome() {
 					</div>
 
 					{/* Right Column - Activity Feed */}
-					<div className="space-y-6">
+					<div className="space-y-4 sm:space-y-6">
 						{/* This Week */}
-						<div className="bg-white border border-slate-100 rounded-lg p-6">
-							<h3 className="font-semibold text-slate-900 mb-4 flex items-center gap-2">
-								<Calendar className="h-5 w-5" />
+						<div className="bg-white border border-slate-100 rounded-lg p-4 sm:p-6">
+							<h3 className="font-semibold text-slate-900 mb-3 sm:mb-4 flex items-center gap-2 text-base sm:text-lg">
+								<Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
 								This Week
 							</h3>
-							<div className="space-y-4">
+							<div className="space-y-3 sm:space-y-4">
 								<div className="flex justify-between items-center">
-									<span className="text-sm text-slate-600">Projects worked on</span>
-									<span className="font-medium text-slate-900">{activeProjects}</span>
+									<span className="text-xs sm:text-sm text-slate-600">Projects worked on</span>
+									<span className="font-medium text-slate-900 text-sm sm:text-base">{activeProjects}</span>
 								</div>
 								<div className="flex justify-between items-center">
-									<span className="text-sm text-slate-600">Hours logged</span>
-									<span className="font-medium text-slate-900">
+									<span className="text-xs sm:text-sm text-slate-600">Hours logged</span>
+									<span className="font-medium text-slate-900 text-sm sm:text-base">
 										{totalHours >= 1 
 											? `${Math.floor(totalHours)}h ${Math.round((totalHours % 1) * 60)}m`.replace(' 0m', '')
 											: totalHours >= (1/60)
@@ -426,21 +426,21 @@ export default function DashboardHome() {
 									</span>
 								</div>
 								<div className="flex justify-between items-center">
-									<span className="text-sm text-slate-600">Invoices sent</span>
-									<span className="font-medium text-slate-900">{invoices.length}</span>
+									<span className="text-xs sm:text-sm text-slate-600">Invoices sent</span>
+									<span className="font-medium text-slate-900 text-sm sm:text-base">{invoices.length}</span>
 								</div>
 							</div>
 						</div>
 
 						{/* Pro Tip */}
-						<div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-lg p-6">
-							<div className="flex items-start gap-3">
-								<div className="p-2 bg-blue-100 rounded-lg">
-									<TrendingUp className="h-5 w-5 text-blue-600" />
+						<div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-lg p-4 sm:p-6">
+							<div className="flex items-start gap-2 sm:gap-3">
+								<div className="p-1.5 sm:p-2 bg-blue-100 rounded-lg flex-shrink-0">
+									<TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
 								</div>
-								<div>
-									<h4 className="font-medium text-slate-900 mb-2">Pro Tip: {currentTip.title}</h4>
-									<p className="text-sm text-slate-700">
+								<div className="min-w-0">
+									<h4 className="font-medium text-slate-900 mb-1 sm:mb-2 text-sm sm:text-base">Pro Tip: {currentTip.title}</h4>
+									<p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
 										{currentTip.content}
 									</p>
 								</div>

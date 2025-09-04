@@ -128,32 +128,33 @@ export default function ProjectsPage() {
 			<div className="min-h-screen bg-white">
 				{/* Header Section - Consistent with app */}
 				<div className="border-b border-slate-100 bg-white">
-					<div className="py-6">
-						<div className="flex items-center justify-between">
+					<div className="py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
+						<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
 							<div>
-								<h1 className="text-3xl font-semibold text-slate-900">Projects</h1>
-								<p className="text-slate-600 mt-1">Manage your projects and track their progress</p>
+								<h1 className="text-2xl sm:text-3xl font-semibold text-slate-900">Projects</h1>
+								<p className="text-slate-600 mt-1 text-sm sm:text-base">Manage your projects and track their progress</p>
 							</div>
 							<button
 								onClick={() => setOpenProposal(true)}
-								className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors text-sm font-medium"
+								className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors text-xs sm:text-sm font-medium"
 							>
-								<FileText className="h-4 w-4" />
-								Generate Proposal
+								<FileText className="h-3 w-3 sm:h-4 sm:w-4" />
+								<span className="hidden sm:inline">Generate Proposal</span>
+								<span className="sm:hidden">Proposal</span>
 							</button>
 						</div>
 					</div>
 				</div>
 
 				{/* Main Content */}
-				<div className="py-8">
+				<div className="py-6 sm:py-8">
 
 					{loadingProjects ? (
-						<div className="text-center py-12">
-							<div className="text-slate-500">Loading projects…</div>
+						<div className="text-center py-8 sm:py-12">
+							<div className="text-slate-500 text-sm sm:text-base">Loading projects…</div>
 						</div>
 					) : (
-						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
 							{/* Add New Project Card - First */}
 							<OnboardingCoachmark
 								step={4}
@@ -163,14 +164,14 @@ export default function ProjectsPage() {
 								trigger={
 																	<div 
 									onClick={() => setIsModalOpen(true)}
-									className="border-2 border-dashed border-slate-200 p-8 rounded-lg bg-slate-50/50 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer group flex items-center justify-center"
+									className="border-2 border-dashed border-slate-200 p-6 sm:p-8 rounded-lg bg-slate-50/50 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer group flex items-center justify-center min-h-[200px] sm:min-h-[240px]"
 								>
 										<div className="text-center">
-											<div className="bg-slate-900 text-white p-4 rounded-xl mx-auto mb-4 w-fit group-hover:bg-slate-800 transition-colors">
-												<Plus className="h-6 w-6" />
+											<div className="bg-slate-900 text-white p-3 sm:p-4 rounded-xl mx-auto mb-3 sm:mb-4 w-fit group-hover:bg-slate-800 transition-colors">
+												<Plus className="h-5 w-5 sm:h-6 sm:w-6" />
 											</div>
-											<h3 className="text-lg font-medium text-slate-900 mb-2">New Project</h3>
-											<p className="text-slate-600 text-sm">Start a new project to organize your work</p>
+											<h3 className="text-base sm:text-lg font-medium text-slate-900 mb-2">New Project</h3>
+											<p className="text-slate-600 text-xs sm:text-sm px-2">Start a new project to organize your work</p>
 										</div>
 									</div>
 								}
@@ -181,64 +182,64 @@ export default function ProjectsPage() {
 							{/* Project Cards - Simple and elegant */}
 							{projects.map((project: Record<string, unknown>) => (
 								<Link key={String(project.id)} href={`/dashboard/projects/${String(project.id)}`} className="group">
-									<div className="bg-white border border-slate-200 rounded-lg p-6 hover:shadow-lg hover:border-slate-300 transition-all duration-200">
-										<div className="flex items-start justify-between mb-4">
-											<div className="bg-slate-100 p-2 rounded-lg">
-												<Folder className="h-5 w-5 text-slate-600" />
+									<div className="bg-white border border-slate-200 rounded-lg p-4 sm:p-6 hover:shadow-lg hover:border-slate-300 transition-all duration-200 min-h-[200px] sm:min-h-[240px] flex flex-col">
+										<div className="flex items-start justify-between mb-3 sm:mb-4">
+											<div className="bg-slate-100 p-1.5 sm:p-2 rounded-lg">
+												<Folder className="h-4 w-4 sm:h-5 sm:w-5 text-slate-600" />
 											</div>
 											<span className={`px-2 py-1 rounded-md text-xs font-medium ${getStatusColor(String(project.status || 'planning'))}`}>
 												{String(project.status || 'planning').replace('-', ' ')}
 											</span>
 										</div>
 										
-										<h3 className="font-semibold text-lg text-slate-900 mb-2 group-hover:text-slate-700 transition-colors line-clamp-1">
+										<h3 className="font-semibold text-base sm:text-lg text-slate-900 mb-2 group-hover:text-slate-700 transition-colors line-clamp-2">
 											{String(project.name)}
 										</h3>
 										
 										{Boolean(project.description) && (
-											<p className="text-slate-600 text-sm mb-4 line-clamp-1">
+											<p className="text-slate-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 flex-grow">
 												{String(project.description)}
 											</p>
 										)}
 										
-										<div className="space-y-3">
+										<div className="space-y-2 sm:space-y-3 mt-auto">
 											<div className="flex items-center justify-between">
-												<div className="flex items-center text-sm text-slate-500">
-													<DollarSign className="h-4 w-4 mr-2" />
+												<div className="flex items-center text-xs sm:text-sm text-slate-500">
+													<DollarSign className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
 													<span>Rate</span>
 												</div>
-												<span className="text-sm font-semibold text-slate-900">
+												<span className="text-xs sm:text-sm font-semibold text-slate-900">
 													${Number(project.price || 0)}{(project.price_type || 'hourly') === 'hourly' ? '/hr' : ''}
 												</span>
 											</div>
 											
 											{Boolean(project.deadline) && (
 												<div className="flex items-center justify-between">
-													<div className="flex items-center text-sm text-slate-500">
-														<Calendar className="h-4 w-4 mr-2" />
+													<div className="flex items-center text-xs sm:text-sm text-slate-500">
+														<Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
 														<span>Deadline</span>
 													</div>
-													<span className="text-sm font-medium text-slate-700">
+													<span className="text-xs sm:text-sm font-medium text-slate-700">
 														{new Date(String(project.deadline)).toLocaleDateString()}
 													</span>
 												</div>
 											)}
 											
 											<div className="flex items-center justify-between">
-												<div className="flex items-center text-sm text-slate-500">
-													<Clock className="h-4 w-4 mr-2" />
+												<div className="flex items-center text-xs sm:text-sm text-slate-500">
+													<Clock className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
 													<span>Created</span>
 												</div>
-												<span className="text-sm text-slate-500">
+												<span className="text-xs sm:text-sm text-slate-500">
 													{project.created_at ? new Date(String(project.created_at)).toLocaleDateString() : 'Recently'}
 												</span>
 											</div>
 										</div>
 										
-										<div className="mt-4 pt-4 border-t border-slate-100">
+										<div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-100">
 											<div className="flex items-center justify-between">
 												<span className="text-xs text-slate-500">Click to view details</span>
-												<ChevronRight className="h-4 w-4 text-slate-400 group-hover:text-slate-600 transition-colors" />
+												<ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 text-slate-400 group-hover:text-slate-600 transition-colors" />
 											</div>
 										</div>
 									</div>
