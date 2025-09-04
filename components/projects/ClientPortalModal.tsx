@@ -137,12 +137,13 @@ export function ClientPortalModal({ projectId }: ClientPortalModalProps) {
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogTrigger asChild>
-				<Button variant="outline" size="sm">
-					<ExternalLink className="h-4 w-4 mr-2" />
-					Client Portal
+				<Button variant="outline" size="sm" className="text-xs sm:text-sm">
+					<ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+					<span className="hidden sm:inline">Client Portal</span>
+					<span className="sm:hidden">Portal</span>
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-2xl">
+			<DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>Client Portal</DialogTitle>
 				</DialogHeader>
