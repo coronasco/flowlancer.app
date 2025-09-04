@@ -43,8 +43,8 @@ export default function InvoicesPage() {
 		<div className="min-h-screen bg-white">
 			{/* Header Section - Full Width */}
 			<div className="border-b border-slate-100 bg-white">
-				<div className="py-6">
-					<div className="flex items-center justify-between">
+				<div className="py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
+					<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
 						<OnboardingCoachmark
 							step={5}
 							title="Professional Invoicing"
@@ -52,12 +52,12 @@ export default function InvoicesPage() {
 							actionText="Complete Setup!"
 							trigger={
 								<div>
-									<h1 className="text-3xl font-semibold text-slate-900">Invoices</h1>
-									<p className="text-slate-600 mt-1">Manage and track your project invoices</p>
+									<h1 className="text-2xl sm:text-3xl font-semibold text-slate-900">Invoices</h1>
+									<p className="text-slate-600 mt-1 text-sm sm:text-base">Manage and track your project invoices</p>
 								</div>
 							}
 						/>
-						<div className="text-sm text-slate-500">
+						<div className="text-xs sm:text-sm text-slate-500 w-full sm:w-auto text-left sm:text-right">
 							{isLoading ? "Loading…" : `${invoices.length} total invoices`}
 						</div>
 					</div>
@@ -65,25 +65,25 @@ export default function InvoicesPage() {
 			</div>
 
 			{/* Main Content */}
-			<div className="py-8">
+			<div className="py-6 sm:py-8">
 				{isLoading && (
-					<div className="space-y-8">
+					<div className="space-y-6 sm:space-y-8">
 						{Array.from({ length: 3 }).map((_, i) => (
-							<div key={i} className="space-y-4">
-								<div className="flex items-center gap-3">
-									<Skeleton className="h-8 w-8 rounded-lg" />
-									<Skeleton className="h-6 w-32" />
+							<div key={i} className="space-y-3 sm:space-y-4">
+								<div className="flex items-center gap-2 sm:gap-3">
+									<Skeleton className="h-6 w-6 sm:h-8 sm:w-8 rounded-lg" />
+									<Skeleton className="h-5 w-24 sm:h-6 sm:w-32" />
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ml-11">
+								<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 ml-8 sm:ml-11">
 									{Array.from({ length: 2 }).map((_, j) => (
-										<div key={j} className="border border-slate-100 p-4 rounded-lg bg-slate-50/30">
-											<div className="space-y-3">
+										<div key={j} className="border border-slate-100 p-3 sm:p-4 rounded-lg bg-slate-50/30">
+											<div className="space-y-2 sm:space-y-3">
 												<div className="flex items-center justify-between">
-													<Skeleton className="h-4 w-16" />
-													<Skeleton className="h-5 w-14 rounded" />
+													<Skeleton className="h-3 w-12 sm:h-4 sm:w-16" />
+													<Skeleton className="h-4 w-10 sm:h-5 sm:w-14 rounded" />
 												</div>
-												<Skeleton className="h-4 w-24" />
-												<Skeleton className="h-3 w-20" />
+												<Skeleton className="h-3 w-16 sm:h-4 sm:w-24" />
+												<Skeleton className="h-3 w-14 sm:h-3 sm:w-20" />
 											</div>
 										</div>
 									))}
@@ -94,66 +94,69 @@ export default function InvoicesPage() {
 				)}
 
 				{!isLoading && sortedProjectGroups.length > 0 && (
-					<div className="space-y-8">
+					<div className="space-y-6 sm:space-y-8">
 						{sortedProjectGroups.map(([projectId, { project, invoices: projectInvoices }]) => {
 							const totalAmount = projectInvoices.reduce((sum: number, inv: Record<string, unknown>) => sum + Number(inv.total_amount), 0);
 							const paidAmount = projectInvoices.filter((inv: Record<string, unknown>) => inv.status === 'paid').reduce((sum: number, inv: Record<string, unknown>) => sum + Number(inv.total_amount), 0);
 							const pendingCount = projectInvoices.filter((inv: Record<string, unknown>) => inv.status === 'pending').length;
 
 							return (
-								<div key={projectId} className="space-y-4">
+								<div key={projectId} className="space-y-3 sm:space-y-4">
 									{/* Project Header */}
-									<div className="flex items-center justify-between">
-										<div className="flex items-center gap-3">
-											<div className="bg-slate-100 p-2 rounded-lg">
-												<Folder className="h-4 w-4 text-slate-600" />
+									<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+										<div className="flex items-start sm:items-center gap-2 sm:gap-3 min-w-0 flex-1">
+											<div className="bg-slate-100 p-1.5 sm:p-2 rounded-lg flex-shrink-0">
+												<Folder className="h-3 w-3 sm:h-4 sm:w-4 text-slate-600" />
 											</div>
-											<div>
-												<h2 className="text-lg font-semibold text-slate-900">
+											<div className="min-w-0 flex-1">
+												<h2 className="text-base sm:text-lg font-semibold text-slate-900 truncate">
 													{String(project?.name) || 'Unknown Project'}
 												</h2>
-												<div className="flex items-center gap-4 text-sm text-slate-500">
+												<div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-xs sm:text-sm text-slate-500">
 													<span>{projectInvoices.length} invoice{projectInvoices.length !== 1 ? 's' : ''}</span>
-													<span>•</span>
-													<span className="flex items-center gap-1">
-														<DollarSign className="h-3 w-3" />
-														${Number(totalAmount).toFixed(2)} total
-													</span>
-													{Number(paidAmount) > 0 && (
-														<>
-															<span>•</span>
-															<span className="text-green-600">${Number(paidAmount).toFixed(2)} paid</span>
-														</>
-													)}
-													{pendingCount > 0 && (
-														<>
-															<span>•</span>
-															<span className="text-blue-600">{pendingCount} pending</span>
-														</>
-													)}
+													<div className="flex items-center gap-2 sm:gap-4">
+														<span className="hidden sm:inline">•</span>
+														<span className="flex items-center gap-1">
+															<DollarSign className="h-3 w-3" />
+															${Number(totalAmount).toFixed(2)} total
+														</span>
+														{Number(paidAmount) > 0 && (
+															<>
+																<span className="hidden sm:inline">•</span>
+																<span className="text-green-600">${Number(paidAmount).toFixed(2)} paid</span>
+															</>
+														)}
+														{pendingCount > 0 && (
+															<>
+																<span className="hidden sm:inline">•</span>
+																<span className="text-blue-600">{pendingCount} pending</span>
+															</>
+														)}
+													</div>
 												</div>
 											</div>
 										</div>
 										{project && (
 											<Link 
 												href={`/dashboard/projects/${project.id}`}
-												className="text-sm text-slate-500 hover:text-slate-700 transition-colors"
+												className="text-xs sm:text-sm text-slate-500 hover:text-slate-700 transition-colors flex-shrink-0"
 											>
-												View Project →
+												<span className="hidden sm:inline">View Project →</span>
+												<span className="sm:hidden">View →</span>
 											</Link>
 										)}
 									</div>
 
 									{/* Project Invoices Grid */}
-									<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ml-11">
+									<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 ml-5 sm:ml-11">
 										{projectInvoices.sort((a: Record<string, unknown>, b: Record<string, unknown>) => new Date(String(b.generated_at)).getTime() - new Date(String(a.generated_at)).getTime()).map((inv: Record<string, unknown>) => (
 											<Link key={String(inv.id)} href={`/dashboard/invoices/${String(inv.id)}`} className="group">
-												<div className="border border-slate-100 p-4 rounded-lg bg-white hover:shadow-md transition-all duration-200">
-													<div className="flex items-start justify-between mb-3">
-														<div className="bg-slate-100 p-1.5 rounded">
+												<div className="border border-slate-100 p-3 sm:p-4 rounded-lg bg-white hover:shadow-md transition-all duration-200">
+													<div className="flex items-start justify-between mb-2 sm:mb-3">
+														<div className="bg-slate-100 p-1 sm:p-1.5 rounded">
 															<FileText className="h-3 w-3 text-slate-600" />
 														</div>
-														<span className={`px-2 py-1 rounded text-xs font-medium ${
+														<span className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium ${
 															inv.status === 'paid' ? 'bg-green-100 text-green-700' :
 															inv.status === 'pending' ? 'bg-blue-100 text-blue-700' :
 															inv.status === 'cancelled' ? 'bg-slate-100 text-slate-700' :
@@ -163,14 +166,14 @@ export default function InvoicesPage() {
 														</span>
 													</div>
 													
-													<h3 className="font-medium text-slate-900 mb-2 text-sm">
+													<h3 className="font-medium text-slate-900 mb-2 text-xs sm:text-sm">
 														#{String(inv.invoice_number)}
 													</h3>
 													
 													<div className="space-y-1">
 														<div className="flex items-center justify-between text-xs">
 															<span className="text-slate-500">Client</span>
-															<span className="font-medium text-slate-900 truncate ml-2">{String(inv.client_name)}</span>
+															<span className="font-medium text-slate-900 truncate ml-2 text-xs">{String(inv.client_name)}</span>
 														</div>
 														<div className="flex items-center justify-between text-xs">
 															<span className="text-slate-500">Amount</span>
@@ -182,9 +185,12 @@ export default function InvoicesPage() {
 														</div>
 													</div>
 													
-													<div className="mt-3 pt-3 border-t border-slate-100">
+													<div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-slate-100">
 														<div className="flex items-center justify-between">
-															<span className="text-xs text-slate-400">View details</span>
+															<span className="text-xs text-slate-400">
+																<span className="hidden sm:inline">View details</span>
+																<span className="sm:hidden">View</span>
+															</span>
 															<div className="text-slate-400 group-hover:text-slate-600 transition-colors text-xs">
 																→
 															</div>
@@ -201,20 +207,21 @@ export default function InvoicesPage() {
 				)}
 				
 				{!isLoading && invoices.length === 0 && (
-					<div className="text-center py-16">
-						<div className="text-slate-400 mb-4">
-							<div className="h-12 w-12 mx-auto bg-slate-100 rounded-lg flex items-center justify-center">
-								<FileText className="h-6 w-6" />
+					<div className="text-center py-12 sm:py-16">
+						<div className="text-slate-400 mb-3 sm:mb-4">
+							<div className="h-10 w-10 sm:h-12 sm:w-12 mx-auto bg-slate-100 rounded-lg flex items-center justify-center">
+								<FileText className="h-5 w-5 sm:h-6 sm:w-6" />
 							</div>
 						</div>
-						<h3 className="text-lg font-medium text-slate-900 mb-2">No invoices yet</h3>
-						<p className="text-slate-500 text-sm mb-6">Create your first invoice from a project to get started.</p>
+						<h3 className="text-base sm:text-lg font-medium text-slate-900 mb-2">No invoices yet</h3>
+						<p className="text-slate-500 text-sm mb-4 sm:mb-6 px-4">Create your first invoice from a project to get started.</p>
 						<Link 
 							href="/dashboard/projects"
-							className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
+							className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors text-sm"
 						>
-							<Folder className="h-4 w-4" />
-							View Projects
+							<Folder className="h-3 w-3 sm:h-4 sm:w-4" />
+							<span className="hidden sm:inline">View Projects</span>
+							<span className="sm:hidden">Projects</span>
 						</Link>
 					</div>
 				)}
