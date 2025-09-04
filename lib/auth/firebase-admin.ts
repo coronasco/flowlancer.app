@@ -1,5 +1,6 @@
 import { initializeApp, getApps, cert, type App } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
+import { getAuth } from "firebase-admin/auth";
 
 let adminApp: App | null = null;
 
@@ -37,5 +38,18 @@ export function getFirebaseAdminApp(): App {
 // Export adminSdk object with commonly used services
 export const adminSdk = {
 	firestore: () => getFirestore(getFirebaseAdminApp()),
+	auth: () => getAuth(getFirebaseAdminApp()),
 	app: () => getFirebaseAdminApp(),
 };
+
+// Verify Firebase ID token
+export async function verifyIdToken(token: string) {
+	try {
+		const auth = getAuth(getFirebaseAdminApp());
+		const decodedToken = await auth.verifyIdToken(token);
+		return decodedToken;
+	} catch (error) {
+		console.error("Error verifying Firebase token:", error);
+		return null;
+	}
+}

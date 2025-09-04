@@ -66,13 +66,14 @@ export default function HomePage() {
               <span className="text-xl font-semibold text-slate-900">Flowlancer</span>
             </div>
             
-            <nav className="flex items-center gap-8">
-              <Link href="/pricing" className="hidden md:inline-block text-slate-600 hover:text-slate-900 transition-colors">Pricing</Link>
-              <Link href="/docs" className="hidden md:inline-block text-slate-600 hover:text-slate-900 transition-colors">Docs</Link>
-              <Link href="/login" className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium">
-                Get Started
-              </Link>
-            </nav>
+                              <nav className="flex items-center gap-8">
+                    <Link href="/pricing" className="hidden md:inline-block text-slate-600 hover:text-slate-900 transition-colors">Pricing</Link>
+                    <Link href="/docs" className="hidden md:inline-block text-slate-600 hover:text-slate-900 transition-colors">Docs</Link>
+                    <Link href="/contact" className="hidden md:inline-block text-slate-600 hover:text-slate-900 transition-colors">Contact</Link>
+                    <Link href="/login" className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium">
+                      Get Started
+                    </Link>
+                  </nav>
           </div>
         </div>
       </header>
@@ -98,21 +99,15 @@ export default function HomePage() {
               intelligent time tracking, automated invoicing, and seamless client collaboration.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link 
-                href="/login"
-                className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-              >
-                Start Free Today
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link 
-                href="/pricing"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-slate-200 text-slate-700 rounded-xl hover:border-slate-300 hover:bg-slate-50 transition-all duration-200 font-semibold text-lg"
-              >
-                View Pricing
-              </Link>
-            </div>
+                              <div className="flex justify-center mb-12">
+                    <Link
+                      href="/login"
+                      className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                    >
+                      Start Free Today
+                      <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-slate-500">
               <div className="flex items-center gap-2">
@@ -316,11 +311,11 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="relative">
-            {/* Connection lines */}
-            <div className="hidden lg:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-blue-200 via-purple-200 to-green-200 transform -translate-y-1/2"></div>
-            
-            <div className="grid lg:grid-cols-3 gap-12 lg:gap-8 relative">
+                        <div className="relative">
+                {/* Connection lines - positioned at icon level */}
+                <div className="hidden lg:block absolute top-[50px] left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-blue-200 via-purple-200 to-green-200"></div>
+
+                <div className="grid lg:grid-cols-3 gap-12 lg:gap-8 relative">
               {/* Step 1 */}
               <div className="text-center group">
                 <div className="relative inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl mb-8 shadow-lg group-hover:scale-110 transition-transform duration-300">
@@ -407,29 +402,35 @@ export default function HomePage() {
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Shield className="h-6 w-6 text-white" />
-              </div>
-              <div className="text-white font-semibold mb-1">Secure & Private</div>
-              <div className="text-slate-400 text-sm">Enterprise-grade security</div>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Clock className="h-6 w-6 text-white" />
-              </div>
-              <div className="text-white font-semibold mb-1">Always Available</div>
-              <div className="text-slate-400 text-sm">99.9% uptime guarantee</div>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Users className="h-6 w-6 text-white" />
-              </div>
-              <div className="text-white font-semibold mb-1">Expert Support</div>
-              <div className="text-slate-400 text-sm">Dedicated customer success</div>
-            </div>
-          </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                  <div className="group">
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                      <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300">
+                        <Shield className="h-8 w-8 text-white" />
+                      </div>
+                      <div className="text-white font-bold text-lg mb-2">Secure & Private</div>
+                      <div className="text-slate-300 text-sm leading-relaxed">Enterprise-grade security with end-to-end encryption</div>
+                    </div>
+                  </div>
+                  <div className="group">
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                      <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-green-500/25 transition-all duration-300">
+                        <Clock className="h-8 w-8 text-white" />
+                      </div>
+                      <div className="text-white font-bold text-lg mb-2">Always Available</div>
+                      <div className="text-slate-300 text-sm leading-relaxed">99.9% uptime guarantee with global infrastructure</div>
+                    </div>
+                  </div>
+                  <div className="group">
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                      <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-purple-500/25 transition-all duration-300">
+                        <Users className="h-8 w-8 text-white" />
+                      </div>
+                      <div className="text-white font-bold text-lg mb-2">Expert Support</div>
+                      <div className="text-slate-300 text-sm leading-relaxed">Dedicated customer success team available 24/7</div>
+                    </div>
+                  </div>
+                </div>
         </div>
       </section>
 

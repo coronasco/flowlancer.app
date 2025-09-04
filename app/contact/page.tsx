@@ -1,6 +1,9 @@
-import { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
 import { 
   Mail, 
   MessageSquare, 
@@ -8,20 +11,62 @@ import {
   HelpCircle,
   Send,
   MapPin,
-  Clock
+  Clock,
+  CheckCircle
 } from "lucide-react";
 import { Footer } from "@/components/layout/Footer";
 
-export const metadata: Metadata = {
-  title: "Contact Us - Flowlancer",
-  description: "Get in touch with the Flowlancer team. We're here to help with any questions about our freelance management platform.",
-  openGraph: {
-    title: "Contact Us - Flowlancer",
-    description: "Get in touch with the Flowlancer team. We're here to help with any questions about our freelance management platform.",
-  }
-};
-
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.ok) {
+        setIsSubmitted(true);
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          subject: "",
+          message: ""
+        });
+        toast.success(result.data.message);
+      } else {
+        toast.error(result.error.message || "Failed to send message");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -106,7 +151,24 @@ export default function ContactPage() {
                 <p className="text-slate-600">We&apos;ll get back to you within 24 hours</p>
               </div>
               
-              <form className="space-y-6">
+              {isSubmitted ? (
+                <div className="text-center py-8">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+                    <CheckCircle className="h-8 w-8 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 mb-2">Message Sent!</h3>
+                  <p className="text-slate-600 mb-6">
+                    Thank you for contacting us. We&apos;ll get back to you within 24 hours.
+                  </p>
+                  <button
+                    onClick={() => setIsSubmitted(false)}
+                    className="text-blue-600 hover:text-blue-700 font-medium"
+                  >
+                    Send Another Message
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -114,6 +176,9 @@ export default function ContactPage() {
                     </label>
                     <input
                       type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                       placeholder="Your first name"
@@ -126,6 +191,9 @@ export default function ContactPage() {
                     </label>
                     <input
                       type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                       placeholder="Your last name"
@@ -139,6 +207,9 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                     placeholder="your.email@example.com"
@@ -150,6 +221,9 @@ export default function ContactPage() {
                     Subject *
                   </label>
                   <select
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                   >
@@ -168,6 +242,9 @@ export default function ContactPage() {
                     Message *
                   </label>
                   <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     required
                     rows={6}
                     className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
@@ -177,12 +254,14 @@ export default function ContactPage() {
                 
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium"
+                  disabled={isSubmitting}
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-lg hover:bg-slate-800 disabled:bg-slate-400 disabled:cursor-not-allowed transition-colors font-medium"
                 >
                   <Send className="h-5 w-5" />
-                  Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </button>
               </form>
+              )}
             </div>
           </div>
         </div>

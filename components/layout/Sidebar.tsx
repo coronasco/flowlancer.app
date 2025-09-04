@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, User, FolderKanban, Receipt, Newspaper, Settings, Shield, BarChart3, Users, Activity, BookOpen } from "lucide-react";
+import { Home, User, FolderKanban, Receipt, Newspaper, Settings, Shield, BarChart3, Users, Activity, BookOpen, MessageSquare } from "lucide-react";
 import {
   Sidebar as UISidebar,
   SidebarContent,
@@ -33,6 +33,7 @@ const adminNavItems = [
 	{ href: "/dashboard/admin", label: "Admin Panel", Icon: Shield },
 	{ href: "/dashboard/admin/analytics", label: "Analytics", Icon: BarChart3 },
 	{ href: "/dashboard/admin/users", label: "Users", Icon: Users },
+	{ href: "/dashboard/admin/contact-messages", label: "Contact Messages", Icon: MessageSquare },
 	{ href: "/dashboard/admin/activity", label: "Activity", Icon: Activity },
 ];
 
