@@ -3,23 +3,16 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "@/contexts/SessionContext";
-import { 
-  Search, 
-  MapPin, 
-  DollarSign, 
-  Clock, 
-  Building, 
-  ExternalLink,
-  Filter,
+import {
+  Search,
+  MapPin,
+  Building,
   Briefcase,
   Globe,
   Calendar,
   Star,
-  Zap,
-  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 
@@ -222,7 +215,7 @@ export default function JobsPage() {
     <div className="min-h-screen bg-white">
       {/* Header Section */}
       <div className="border-b border-slate-100 bg-white">
-        <div className="py-6 px-4 sm:px-6 lg:px-8">
+        <div className="py-6">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 flex items-center gap-3">
@@ -231,18 +224,24 @@ export default function JobsPage() {
               </h1>
                               <p className="text-slate-600 mt-2">Testing interface with mock data - Users will see &quot;In Development&quot; page</p>
             </div>
-            <div className="flex items-center gap-4 text-sm text-slate-500">
-              <Badge className="bg-red-100 text-red-700 border-red-200">
+            <div className="flex items-center gap-6 text-sm">
+              <Badge className="bg-red-50 text-red-700 border border-red-200 px-3 py-1">
                 <Star className="h-3 w-3 mr-1" />
                 Admin Only
               </Badge>
-              <div className="flex items-center gap-1">
-                <TrendingUp className="h-4 w-4 text-green-600" />
-                <span>{jobs.length} mock jobs</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Zap className="h-4 w-4 text-blue-600" />
-                <span>{featuredJobs.length} featured</span>
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-slate-400 rounded-full"></div>
+                  <span className="text-slate-600">{jobs.length} total jobs</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                  <span className="text-slate-600">{featuredJobs.length} featured</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <span className="text-slate-600">{filteredJobs.length} showing</span>
+                </div>
               </div>
             </div>
           </div>
@@ -250,59 +249,56 @@ export default function JobsPage() {
       </div>
 
       {/* Search and Filters */}
-      <div className="py-6 px-4 sm:px-6 lg:px-8 bg-slate-50 border-b border-slate-100">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+      <div className=" py-4 bg-white border-b border-slate-200">
+        <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
+          {/* Search Input */}
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Input
+              placeholder="Search jobs..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 h-9 text-sm border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+          
+          {/* Filters */}
+          <div className="flex items-center gap-3 text-sm">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
-              <Input
-                type="text"
-                placeholder="Search jobs, skills, companies..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
+              <select
+                value={typeFilter}
+                onChange={(e) => setTypeFilter(e.target.value)}
+                className="appearance-none bg-white px-3 py-2 pr-8 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 cursor-pointer h-9"
+              >
+                <option value="">All Types</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Contract">Contract</option>
+                <option value="Part-time">Part-time</option>
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                <svg className="h-3 w-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
             </div>
             
-            <div className="relative">
-              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
-              <Input
-                type="text"
-                placeholder="Location"
-                value={locationFilter}
-                onChange={(e) => setLocationFilter(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-
-            <select
-              value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value)}
-              className="px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">All Types</option>
-              <option value="Full-time">Full-time</option>
-              <option value="Contract">Contract</option>
-              <option value="Part-time">Part-time</option>
-            </select>
-
-            <div className="flex items-center gap-2">
+            <Input
+              placeholder="Location"
+              value={locationFilter}
+              onChange={(e) => setLocationFilter(e.target.value)}
+              className="w-32 h-9 text-sm border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            />
+            
+            <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
-                id="remote-only"
                 checked={remoteOnly}
                 onChange={(e) => setRemoteOnly(e.target.checked)}
-                className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500 focus:ring-1"
               />
-              <label htmlFor="remote-only" className="text-sm text-slate-700">
-                Remote only
-              </label>
-            </div>
-          </div>
+              <span className="text-slate-700 whitespace-nowrap">Remote only</span>
+            </label>
 
-          <div className="flex items-center gap-2 text-sm text-slate-600">
-            <Filter className="h-4 w-4" />
-            <span>Showing {filteredJobs.length} of {jobs.length} jobs</span>
             {(searchTerm || locationFilter || typeFilter || remoteOnly) && (
               <button
                 onClick={() => {
@@ -311,9 +307,9 @@ export default function JobsPage() {
                   setTypeFilter("");
                   setRemoteOnly(false);
                 }}
-                className="text-blue-600 hover:text-blue-700 ml-2"
+                className="text-blue-600 hover:text-blue-700 text-sm font-medium"
               >
-                Clear filters
+                Clear
               </button>
             )}
           </div>
@@ -321,46 +317,67 @@ export default function JobsPage() {
       </div>
 
       {/* Jobs List */}
-      <div className="py-8 px-4 sm:px-6 lg:px-8">
+      <div className="py-6">
         {isLoading ? (
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-slate-600">Loading amazing opportunities...</p>
+            <p className="text-slate-600">Loading opportunities...</p>
           </div>
         ) : (
-          <div className="max-w-6xl mx-auto space-y-8">
+          <div className="space-y-4">
             {/* Featured Jobs */}
             {featuredJobs.length > 0 && (
-              <div>
-                <div className="flex items-center gap-2 mb-6">
-                  <Star className="h-5 w-5 text-yellow-500" />
-                  <h2 className="text-xl font-semibold text-slate-900">Featured Opportunities</h2>
+              <>
+                <div className="flex items-center gap-2 mb-3">
+                  <Star className="h-4 w-4 text-amber-500" />
+                  <h2 className="font-medium text-slate-900">Featured Jobs</h2>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-3 mb-6">
                   {featuredJobs.map((job) => (
                     <JobCard key={job.id} job={job} featured />
                   ))}
                 </div>
-              </div>
+              </>
             )}
 
             {/* Regular Jobs */}
             {regularJobs.length > 0 && (
-              <div>
-                <h2 className="text-xl font-semibold text-slate-900 mb-6">All Opportunities</h2>
-                <div className="space-y-4">
+              <>
+                {featuredJobs.length > 0 && (
+                  <div className="flex items-center gap-2 mb-3">
+                    <Briefcase className="h-4 w-4 text-slate-600" />
+                    <h2 className="font-medium text-slate-900">All Jobs</h2>
+                  </div>
+                )}
+                <div className="space-y-3">
                   {regularJobs.map((job) => (
                     <JobCard key={job.id} job={job} />
                   ))}
                 </div>
-              </div>
+              </>
             )}
 
             {filteredJobs.length === 0 && (
-              <div className="text-center py-12">
-                <Briefcase className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-slate-900 mb-2">No jobs found</h3>
-                <p className="text-slate-500">Try adjusting your search criteria or check back later for new opportunities.</p>
+              <div className="text-center py-16">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-slate-100 rounded-lg mb-4">
+                  <Briefcase className="h-6 w-6 text-slate-400" />
+                </div>
+                <h3 className="font-medium text-slate-900 mb-2">No jobs found</h3>
+                <p className="text-slate-600 text-sm mb-4">
+                  Try adjusting your search criteria or check back later.
+                </p>
+                <Button
+                  onClick={() => {
+                    setSearchTerm("");
+                    setLocationFilter("");
+                    setTypeFilter("");
+                    setRemoteOnly(false);
+                  }}
+                  variant="outline"
+                  size="sm"
+                >
+                  Clear filters
+                </Button>
               </div>
             )}
           </div>
@@ -372,84 +389,100 @@ export default function JobsPage() {
 
 function JobCard({ job, featured = false }: { job: Job; featured?: boolean }) {
   return (
-    <Card className={`p-6 hover:shadow-lg transition-all duration-200 ${featured ? 'border-yellow-200 bg-yellow-50/30' : 'hover:border-slate-300'}`}>
-      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start gap-4 mb-4">
-            {job.logo ? (
-              <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center">
-                <Building className="h-6 w-6 text-slate-400" />
-              </div>
-            ) : (
-              <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center">
-                <Building className="h-6 w-6 text-slate-400" />
-              </div>
-            )}
+    <div className={`bg-white rounded-xl border transition-all duration-200 hover:shadow-md hover:border-slate-300 ${
+      featured ? 'border-amber-200 ring-1 ring-amber-100' : 'border-slate-200'
+    }`}>
+      <div className="p-6">
+        <div className="flex items-start justify-between gap-6 mb-4">
+          <div className="flex items-start gap-4 flex-1 min-w-0">
+            {/* Company Logo */}
+            <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Building className="h-6 w-6 text-slate-500" />
+            </div>
             
+            {/* Job Info */}
             <div className="flex-1 min-w-0">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-1 line-clamp-1">
-                    {job.title}
-                  </h3>
-                  <p className="text-slate-600 mb-2">{job.company}</p>
-                </div>
+              <div className="flex items-center gap-3 mb-1">
+                <h3 className="text-lg font-semibold text-slate-900 truncate">{job.title}</h3>
                 {featured && (
-                  <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
                     <Star className="h-3 w-3 mr-1" />
                     Featured
-                  </Badge>
+                  </span>
                 )}
               </div>
               
-              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600 mb-3">
+              <div className="flex items-center gap-4 text-sm text-slate-600 mb-3">
+                <span className="font-medium text-slate-900">{job.company}</span>
+                <span className="text-slate-400">•</span>
                 <div className="flex items-center gap-1">
-                  <MapPin className="h-4 w-4" />
+                  <MapPin className="h-3 w-3" />
                   <span>{job.location}</span>
-                  {job.remote && <Badge variant="outline" className="ml-1 text-xs">Remote</Badge>}
                 </div>
-                {job.salary && (
-                  <div className="flex items-center gap-1">
-                    <DollarSign className="h-4 w-4" />
-                    <span>{job.salary}</span>
-                  </div>
+                {job.remote && (
+                  <>
+                    <span className="text-slate-400">•</span>
+                    <div className="flex items-center gap-1">
+                      <Globe className="h-3 w-3 text-green-600" />
+                      <span className="text-green-600 font-medium">Remote</span>
+                    </div>
+                  </>
                 )}
-                <div className="flex items-center gap-1">
-                  <Clock className="h-4 w-4" />
-                  <span>{job.type}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Calendar className="h-4 w-4" />
-                  <span>{job.posted}</span>
-                </div>
+                <span className="text-slate-400">•</span>
+                <span className="capitalize">{job.type}</span>
               </div>
               
-              <p className="text-slate-700 line-clamp-2 mb-4">
+              <p className="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-2">
                 {job.description}
               </p>
-              
-              <div className="flex flex-wrap gap-2">
-                {job.tags.map((tag) => (
-                  <Badge key={tag} variant="outline" className="text-xs">
-                    {tag}
-                  </Badge>
-                ))}
+            </div>
+          </div>
+          
+          {/* Salary & Actions */}
+          <div className="flex flex-col items-end gap-3 flex-shrink-0">
+            <div className="text-right">
+              <div className="text-xl font-bold text-slate-900 mb-1">{job.salary}</div>
+              <div className="flex items-center gap-1 text-xs text-slate-500">
+                <Calendar className="h-3 w-3" />
+                <span>{job.posted}</span>
               </div>
+            </div>
+            
+            <div className="flex gap-2">
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="text-xs px-3 py-1.5 h-auto border-slate-300 text-slate-700 hover:bg-slate-50"
+              >
+                Details
+              </Button>
+              <Button 
+                size="sm" 
+                className="text-xs px-4 py-1.5 h-auto bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                Apply
+              </Button>
             </div>
           </div>
         </div>
         
-        <div className="flex flex-col gap-2 lg:ml-4">
-          <Button className="w-full lg:w-auto">
-            <ExternalLink className="h-4 w-4 mr-2" />
-            Apply Now
-          </Button>
-          <Button variant="outline" className="w-full lg:w-auto">
-            <Globe className="h-4 w-4 mr-2" />
-            View Details
-          </Button>
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2 pt-3 border-t border-slate-100">
+          {job.tags.slice(0, 5).map((tag, index) => (
+            <span 
+              key={index}
+              className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors"
+            >
+              {tag}
+            </span>
+          ))}
+          {job.tags.length > 5 && (
+            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-500">
+              +{job.tags.length - 5} more
+            </span>
+          )}
         </div>
       </div>
-    </Card>
+    </div>
   );
 }
