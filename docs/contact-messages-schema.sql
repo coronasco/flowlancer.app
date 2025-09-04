@@ -29,36 +29,20 @@ FOR INSERT
 TO anon
 WITH CHECK (true);
 
--- Create policy to allow authenticated admin users to view all messages
-CREATE POLICY "Allow admin users to view all contact messages" ON contact_messages
+-- Create policy to allow authenticated users to view all messages
+-- (Admin check will be done at API level using Firebase)
+CREATE POLICY "Allow authenticated users to view all contact messages" ON contact_messages
 FOR SELECT 
 TO authenticated
-USING (
-  EXISTS (
-    SELECT 1 FROM customers 
-    WHERE customers.uid = auth.uid() 
-    AND customers.admin = true
-  )
-);
+USING (true);
 
--- Create policy to allow authenticated admin users to update messages
-CREATE POLICY "Allow admin users to update contact messages" ON contact_messages
+-- Create policy to allow authenticated users to update messages
+-- (Admin check will be done at API level using Firebase)
+CREATE POLICY "Allow authenticated users to update contact messages" ON contact_messages
 FOR UPDATE 
 TO authenticated
-USING (
-  EXISTS (
-    SELECT 1 FROM customers 
-    WHERE customers.uid = auth.uid() 
-    AND customers.admin = true
-  )
-)
-WITH CHECK (
-  EXISTS (
-    SELECT 1 FROM customers 
-    WHERE customers.uid = auth.uid() 
-    AND customers.admin = true
-  )
-);
+USING (true)
+WITH CHECK (true);
 
 -- Create function to update the updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()

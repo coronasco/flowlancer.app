@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
     const firestore = adminSdk.firestore();
     const userDoc = await firestore.collection("customers").doc(decodedToken.uid).get();
     const userData = userDoc.data();
-    const isAdmin = userData?.admin === true;
+    const isAdmin = userData?.isAdmin === true;
     if (!isAdmin) {
       return NextResponse.json(
         { ok: false, error: { message: "Admin access required" } },
@@ -107,7 +107,7 @@ export async function PATCH(request: NextRequest) {
     const firestore = adminSdk.firestore();
     const userDoc = await firestore.collection("customers").doc(decodedToken.uid).get();
     const userData = userDoc.data();
-    const isAdmin = userData?.admin === true;
+    const isAdmin = userData?.isAdmin === true;
     if (!isAdmin) {
       return NextResponse.json(
         { ok: false, error: { message: "Admin access required" } },
