@@ -15,9 +15,9 @@ export function StatTile({
 			? "bg-[oklch(0.9_0.12_190)]"
 			: "bg-[oklch(0.92_0.12_22)]";
 	return (
-		<div className={cn("rounded-xl p-4 shadow-[var(--shadow-sm)]", bg, className)} {...props}>
-			<div className="text-xs font-medium opacity-80">{title}</div>
-			<div className="mt-1 text-2xl font-semibold">{value}</div>
+		<div className={cn("rounded-xl p-3 sm:p-4 shadow-[var(--shadow-sm)]", bg, className)} {...props}>
+			<div className="text-xs sm:text-sm font-medium opacity-80">{title}</div>
+			<div className="mt-1 text-xl sm:text-2xl font-semibold">{value}</div>
 		</div>
 	);
 }

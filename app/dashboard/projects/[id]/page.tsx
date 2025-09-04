@@ -230,15 +230,15 @@ export default function ProjectPage() {
 		<div className="min-h-screen bg-white">
 			{/* Header Section - Full Width */}
 			<div className="border-b border-slate-100 bg-white">
-				<div className="py-4">
+				<div className="py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
 					{/* Back Navigation */}
-					<Link href="/dashboard/projects" className="inline-flex items-center text-sm text-slate-500 hover:text-slate-700 transition-colors mb-6">
-						<ChevronLeft className="h-4 w-4 mr-1" />
+					<Link href="/dashboard/projects" className="inline-flex items-center text-xs sm:text-sm text-slate-500 hover:text-slate-700 transition-colors mb-4 sm:mb-6">
+						<ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
 						Back to projects
 					</Link>
 					
 					{/* Main Header Content */}
-					<div className="flex items-center justify-between">
+					<div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
 						{/* Left: Project Title & Actions */}
 						<div className="flex items-center gap-4">
 							{isEditingProject ? (
@@ -276,30 +276,30 @@ export default function ProjectPage() {
 									</div>
 								</div>
 							) : (
-								<div className="flex items-start justify-between">
-									<div className="flex-1">
-										<h1 className="text-3xl font-bold text-slate-900 mb-2">{project?.name ?? "Project"}</h1>
+								<div className="flex flex-col sm:flex-row sm:items-start justify-between w-full">
+									<div className="flex-1 mb-3 sm:mb-0">
+										<h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 mb-2">{project?.name ?? "Project"}</h1>
 										{project?.description && (
-											<p className="text-slate-600 text-sm">{project.description}</p>
+											<p className="text-slate-600 text-sm sm:text-base">{project.description}</p>
 										)}
 									</div>
-									<div className="flex items-center gap-2 ml-4">
+									<div className="flex items-center gap-2 sm:ml-4">
 										<button 
 											onClick={() => setIsEditingProject(true)}
-											className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 hover:border-slate-400 transition-all duration-200 shadow-sm"
+											className="inline-flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 hover:border-slate-400 transition-all duration-200 shadow-sm"
 											title="Edit Project"
 										>
-											<Pencil className="h-4 w-4" />
-											Edit
+											<Pencil className="h-3 w-3 sm:h-4 sm:w-4" />
+											<span className="hidden sm:inline">Edit</span>
 										</button>
 																			{!showDeleteConfirm ? (
 										<button
 											onClick={() => setShowDeleteConfirm(true)}
-											className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-red-700 bg-white border border-red-300 rounded-lg hover:bg-red-50 hover:border-red-400 transition-all duration-200 shadow-sm"
+											className="inline-flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium text-red-700 bg-white border border-red-300 rounded-lg hover:bg-red-50 hover:border-red-400 transition-all duration-200 shadow-sm"
 											title="Delete Project"
 										>
-											<Trash2 className="h-4 w-4" />
-											Delete
+											<Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
+											<span className="hidden sm:inline">Delete</span>
 										</button>
 									) : (
 										<div className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-red-700 bg-red-50 border border-red-300 rounded-lg">
@@ -327,17 +327,17 @@ export default function ProjectPage() {
 						</div>
 
 						{/* Right: Timer, Actions */}
-						<div className="flex items-center divide-x divide-slate-200">
+						<div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-0 sm:divide-x sm:divide-slate-200 w-full lg:w-auto">
 							{/* Timer Section */}
-							<div className="pr-6">
+							<div className="sm:pr-4 lg:pr-6 w-full sm:w-auto">
 								<ProjectTimerCard projectId={id} user={user || undefined} hourlyRate={hourlyRate} />
 							</div>
 
 							{/* Actions Section */}
-							<div className="pl-6 flex items-center gap-3">
+							<div className="sm:pl-4 lg:pl-6 flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
 								<ClientPortalModal projectId={id} />
 								
-								<div className="h-6 w-px bg-slate-200"></div>
+								<div className="hidden sm:block h-6 w-px bg-slate-200"></div>
 								
 								<AddTaskInline onAdd={(payload) => createTask(payload)} />
 							</div>
@@ -347,8 +347,8 @@ export default function ProjectPage() {
 			</div>
 
 			{/* Main Content */}
-			<div className="py-8">
-				<div className="grid md:grid-cols-3 gap-6 items-start">
+			<div className="py-6 sm:py-8">
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-start">
 					{columns.map((col) => (
 						<div 
 							key={col} 
@@ -1033,12 +1033,13 @@ function AddTaskInline({ onAdd }: { onAdd: (data: { title: string; description?:
 	
 	return (
 		<>
-			<button 
+						<button
 				onClick={() => setOpen(true)}
-				className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors text-sm font-medium flex items-center gap-2"
+				className="px-3 sm:px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors text-xs sm:text-sm font-medium flex items-center gap-1 sm:gap-2"
 			>
-				<Plus className="h-4 w-4" />
-				Add Task
+				<Plus className="h-3 w-3 sm:h-4 sm:w-4" />
+				<span className="hidden sm:inline">Add Task</span>
+				<span className="sm:hidden">Add</span>
 			</button>
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
