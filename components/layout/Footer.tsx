@@ -15,81 +15,64 @@ import Image from "next/image";
 export function Footer() {
   return (
     <footer className="bg-slate-900 text-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
-        <div className="py-16">
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+        <div className="py-12 sm:py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {/* Company Info */}
-            <div className="lg:col-span-1">
-              <div className="flex items-center gap-3 mb-6">
-                <Image src="/flowlancer_logo_light.svg" alt="Flowlancer" width={32} height={32} />
-                <span className="text-xl font-semibold">Flowlancer</span>
+            <div className="lg:col-span-2">
+              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <Image src="/flowlancer_logo_light.svg" alt="Flowlancer" width={28} height={28} className="sm:w-8 sm:h-8" />
+                <span className="text-lg sm:text-xl font-semibold">Flowlancer</span>
               </div>
-              <p className="text-slate-300 mb-6 leading-relaxed">
-                Professional freelance management platform built for modern workflows. Streamline projects, track time, and grow your business.
+              <p className="text-slate-300 mb-6 leading-relaxed text-sm sm:text-base max-w-md">
+                The complete freelance management platform. Streamline projects, track time, create invoices, and collaborate with clients.
               </p>
-              <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors">
-                  <span className="text-sm">𝕏</span>
-                </a>
-                <a href="#" className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors">
-                  <span className="text-sm">in</span>
-                </a>
-                <a href="#" className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors">
-                  <span className="text-sm">yt</span>
-                </a>
+              
+              {/* Quick Links for Mobile */}
+              <div className="md:hidden mb-6">
+                <div className="flex flex-wrap gap-4 text-sm">
+                  <Link href="/#features" className="text-slate-300 hover:text-white transition-colors">Features</Link>
+                  <Link href="/docs" className="text-slate-300 hover:text-white transition-colors">Docs</Link>
+                  <Link href="/dashboard/upgrade" className="text-slate-300 hover:text-white transition-colors">Pricing</Link>
+                  <Link href="/login" className="text-slate-300 hover:text-white transition-colors">Sign In</Link>
+                </div>
               </div>
             </div>
 
-            {/* Product */}
-            <div>
-              <h3 className="text-lg font-semibold mb-6">Product</h3>
-              <ul className="space-y-4">
-                <li><Link href="/#features" className="text-slate-300 hover:text-white transition-colors">Features</Link></li>
-                <li><Link href="/login" className="text-slate-300 hover:text-white transition-colors">Get Started</Link></li>
-                <li><a href="#" className="text-slate-300 hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="#" className="text-slate-300 hover:text-white transition-colors">Roadmap</a></li>
-                <li><a href="#" className="text-slate-300 hover:text-white transition-colors">Changelog</a></li>
+            {/* Quick Links - Desktop */}
+            <div className="hidden md:block">
+              <h3 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6">Product</h3>
+              <ul className="space-y-3 sm:space-y-4">
+                <li><Link href="/#features" className="text-slate-300 hover:text-white transition-colors text-sm sm:text-base">Features</Link></li>
+                <li><Link href="/docs" className="text-slate-300 hover:text-white transition-colors text-sm sm:text-base">Documentation</Link></li>
+                <li><Link href="/dashboard/upgrade" className="text-slate-300 hover:text-white transition-colors text-sm sm:text-base">Pricing</Link></li>
+                <li><Link href="/login" className="text-slate-300 hover:text-white transition-colors text-sm sm:text-base">Get Started</Link></li>
               </ul>
             </div>
 
-            {/* Resources */}
-            <div>
-              <h3 className="text-lg font-semibold mb-6">Resources</h3>
-              <ul className="space-y-4">
-                <li><a href="#" className="text-slate-300 hover:text-white transition-colors">Documentation</a></li>
-                <li><a href="#" className="text-slate-300 hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="text-slate-300 hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="text-slate-300 hover:text-white transition-colors">Tutorials</a></li>
-                <li><a href="#" className="text-slate-300 hover:text-white transition-colors">Templates</a></li>
-              </ul>
-            </div>
-
-            {/* Company */}
-            <div>
-              <h3 className="text-lg font-semibold mb-6">Company</h3>
-              <ul className="space-y-4">
-                <li><Link href="/about" className="text-slate-300 hover:text-white transition-colors">About Us</Link></li>
-                <li><Link href="/contact" className="text-slate-300 hover:text-white transition-colors">Contact</Link></li>
-                <li><a href="#" className="text-slate-300 hover:text-white transition-colors">Careers</a></li>
-                <li><a href="#" className="text-slate-300 hover:text-white transition-colors">Press Kit</a></li>
-                <li><a href="#" className="text-slate-300 hover:text-white transition-colors">Partners</a></li>
+            {/* Support - Desktop */}
+            <div className="hidden lg:block">
+              <h3 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6">Support</h3>
+              <ul className="space-y-3 sm:space-y-4">
+                <li><Link href="/contact" className="text-slate-300 hover:text-white transition-colors text-sm sm:text-base">Contact</Link></li>
+                <li><Link href="/about" className="text-slate-300 hover:text-white transition-colors text-sm sm:text-base">About</Link></li>
               </ul>
             </div>
           </div>
         </div>
 
         {/* Bottom Footer */}
-        <div className="border-t border-slate-800 py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex flex-wrap items-center gap-6 text-sm text-slate-400">
-              <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
-              <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Security</a>
+        <div className="border-t border-slate-800 py-6 sm:py-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 sm:gap-6 text-xs sm:text-sm text-slate-400">
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+              <span className="hidden sm:inline">•</span>
+              <span className="text-slate-500">Made for freelancers, by freelancers</span>
             </div>
-            <div className="text-sm text-slate-400">
-              © 2024 Flowlancer. All rights reserved.
+            <div className="text-xs sm:text-sm text-slate-400">
+              © 2024 Flowlancer
             </div>
           </div>
         </div>

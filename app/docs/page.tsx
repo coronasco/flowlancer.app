@@ -11,68 +11,97 @@ export const metadata: Metadata = {
 
 export default function DocsPage() {
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
-			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+		<div className="min-h-screen bg-white">
+			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
 				{/* Header */}
-				<div className="mb-8 sm:mb-10 lg:mb-12">
+				<div className="mb-12 sm:mb-16 lg:mb-20">
 					<Link 
 						href="/dashboard" 
-						className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-4 sm:mb-6 transition-colors text-sm sm:text-base"
+						className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-6 sm:mb-8 transition-colors text-sm sm:text-base group"
 					>
-						<ArrowLeft className="h-4 w-4" />
+						<ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
 						<span className="hidden sm:inline">Back to Dashboard</span>
 						<span className="sm:hidden">Back</span>
 					</Link>
 					<div className="text-center">
-						<h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-3 sm:mb-4 px-2">
-							Flowlancer <span className="brand-gradient">Documentation</span>
+						<div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+							<CheckCircle className="h-3 w-3 sm:h-4 sm:w-4" />
+							Complete Guide
+						</div>
+						<h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 sm:mb-6">
+							Flowlancer
+							<span className="block text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text">
+								Documentation
+							</span>
 						</h1>
-						<p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-3xl mx-auto px-4">
-							Everything you need to know about managing your freelancing business with Flowlancer.
+						<p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+							Master your freelancing workflow with our comprehensive guide. From setup to advanced features, 
+							everything you need to grow your business.
 						</p>
 					</div>
 				</div>
 
 				{/* Quick Start */}
-				<section className="mb-12 sm:mb-16">
-					<h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-4 sm:mb-6 text-center sm:text-left">🚀 Quick Start Guide</h2>
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-						<Card className="p-4 sm:p-6">
-							<div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
-								<User className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
+				<section className="mb-16 sm:mb-20">
+					<div className="text-center mb-8 sm:mb-12">
+						<h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 sm:mb-4">Quick Start Guide</h2>
+						<p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base">
+							Get up and running in minutes with these three simple steps
+						</p>
+					</div>
+					
+					<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+						<Card className="relative p-6 sm:p-8 hover:shadow-lg transition-all duration-200 group border-l-4 border-l-blue-500">
+							<div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl mb-6 group-hover:scale-110 transition-transform duration-200">
+								<User className="h-6 w-6 text-white" />
 							</div>
-							<h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-2">1. Complete Your Profile</h3>
-							<p className="text-slate-600 text-xs sm:text-sm mb-3 sm:mb-4">
-								Set up your professional profile with skills, experience, and hourly rates.
+							<div className="absolute top-4 right-4 text-2xl font-bold text-blue-100">01</div>
+							<h3 className="text-lg sm:text-xl font-semibold text-slate-900 mb-3">Complete Your Profile</h3>
+							<p className="text-slate-600 text-sm sm:text-base mb-4 leading-relaxed">
+								Set up your professional profile with skills, experience, and hourly rates to attract clients.
 							</p>
-							<Link href="/dashboard/profile" className="text-blue-600 hover:text-blue-700 text-xs sm:text-sm font-medium">
-								Go to Profile →
+							<Link 
+								href="/dashboard/profile" 
+								className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm group-hover:gap-3 transition-all"
+							>
+								Go to Profile
+								<ArrowLeft className="h-4 w-4 rotate-180" />
 							</Link>
 						</Card>
 
-						<Card className="p-4 sm:p-6">
-							<div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
-								<FolderKanban className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
+						<Card className="relative p-6 sm:p-8 hover:shadow-lg transition-all duration-200 group border-l-4 border-l-green-500">
+							<div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl mb-6 group-hover:scale-110 transition-transform duration-200">
+								<FolderKanban className="h-6 w-6 text-white" />
 							</div>
-							<h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-2">2. Create Your First Project</h3>
-							<p className="text-slate-600 text-xs sm:text-sm mb-3 sm:mb-4">
-								Add a new project with tasks, deadlines, and client information.
+							<div className="absolute top-4 right-4 text-2xl font-bold text-green-100">02</div>
+							<h3 className="text-lg sm:text-xl font-semibold text-slate-900 mb-3">Create Your First Project</h3>
+							<p className="text-slate-600 text-sm sm:text-base mb-4 leading-relaxed">
+								Add a new project with tasks, deadlines, and client information using our Kanban boards.
 							</p>
-							<Link href="/dashboard/projects" className="text-green-600 hover:text-green-700 text-xs sm:text-sm font-medium">
-								Create Project →
+							<Link 
+								href="/dashboard/projects" 
+								className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-medium text-sm group-hover:gap-3 transition-all"
+							>
+								Create Project
+								<ArrowLeft className="h-4 w-4 rotate-180" />
 							</Link>
 						</Card>
 
-						<Card className="p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
-							<div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
-								<Receipt className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
+						<Card className="relative p-6 sm:p-8 hover:shadow-lg transition-all duration-200 group border-l-4 border-l-purple-500">
+							<div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl mb-6 group-hover:scale-110 transition-transform duration-200">
+								<Receipt className="h-6 w-6 text-white" />
 							</div>
-							<h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-2">3. Generate Invoices</h3>
-							<p className="text-slate-600 text-xs sm:text-sm mb-3 sm:mb-4">
-								Create professional invoices from your completed projects.
+							<div className="absolute top-4 right-4 text-2xl font-bold text-purple-100">03</div>
+							<h3 className="text-lg sm:text-xl font-semibold text-slate-900 mb-3">Generate Invoices</h3>
+							<p className="text-slate-600 text-sm sm:text-base mb-4 leading-relaxed">
+								Create professional invoices automatically from your tracked time and completed projects.
 							</p>
-							<Link href="/dashboard/invoices" className="text-purple-600 hover:text-purple-700 text-xs sm:text-sm font-medium">
-								View Invoices →
+							<Link 
+								href="/dashboard/invoices" 
+								className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium text-sm group-hover:gap-3 transition-all"
+							>
+								View Invoices
+								<ArrowLeft className="h-4 w-4 rotate-180" />
 							</Link>
 						</Card>
 					</div>

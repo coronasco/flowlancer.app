@@ -46,36 +46,44 @@ export default function UpgradePage() {
 	const billingPeriod = isAnnual ? "year" : "month";
 
 	return (
-		<div className="min-h-screen ">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+		<div className="min-h-screen bg-white">
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
 				{/* Header */}
-				<div className="mb-6 sm:mb-8 lg:mb-12">
+				<div className="mb-12 sm:mb-16 lg:mb-20">
 					<Link 
 						href="/dashboard" 
-						className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-4 sm:mb-6 transition-colors text-sm sm:text-base"
+						className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-6 sm:mb-8 transition-colors text-sm sm:text-base group"
 					>
-						<ArrowLeft className="h-4 w-4" />
+						<ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
 						<span className="hidden sm:inline">Back to Dashboard</span>
 						<span className="sm:hidden">Back</span>
 					</Link>
 					<div className="text-center">
-						<h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-3 sm:mb-4 px-2">
-							Upgrade to <span className="brand-gradient">Flowlancer Pro</span>
+						<div className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+							<Sparkles className="h-3 w-3 sm:h-4 sm:w-4" />
+							Unlock Your Potential
+						</div>
+						<h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 sm:mb-6">
+							Upgrade to
+							<span className="block text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text">
+								Flowlancer Pro
+							</span>
 						</h1>
-						<p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-2xl mx-auto px-4">
-							Unlock the full potential of your freelancing business with advanced features and AI-powered tools.
+						<p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+							Transform your freelancing business with AI-powered tools, advanced analytics, 
+							and professional features designed for serious freelancers.
 						</p>
 					</div>
 				</div>
 
 				{/* Billing Toggle */}
-				<div className="flex justify-center mb-8 sm:mb-10 lg:mb-12">
-					<div className="bg-slate-100 p-1 rounded-xl flex items-center gap-1">
+				<div className="flex justify-center mb-12 sm:mb-16">
+					<div className="bg-slate-100 p-1 rounded-2xl flex items-center gap-1 shadow-inner">
 						<button
 							onClick={() => setIsAnnual(false)}
-							className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
+							className={`px-4 sm:px-6 py-3 rounded-xl text-sm sm:text-base font-medium transition-all duration-200 ${
 								!isAnnual 
-									? "bg-white text-slate-900 shadow-sm" 
+									? "bg-white text-slate-900 shadow-lg" 
 									: "text-slate-600 hover:text-slate-900"
 							}`}
 						>
@@ -83,32 +91,38 @@ export default function UpgradePage() {
 						</button>
 						<button
 							onClick={() => setIsAnnual(true)}
-							className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all relative ${
+							className={`px-4 sm:px-6 py-3 rounded-xl text-sm sm:text-base font-medium transition-all duration-200 relative ${
 								isAnnual 
-									? "bg-white text-slate-900 shadow-sm" 
+									? "bg-white text-slate-900 shadow-lg" 
 									: "text-slate-600 hover:text-slate-900"
 							}`}
 						>
 							Annual
-							<Badge className="absolute -top-1 sm:-top-2 -right-1 sm:-right-2 bg-green-500 text-white text-xs px-1 sm:px-1.5 py-0.5">
+							<div className="absolute -top-2 -right-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold shadow-lg">
 								<span className="hidden sm:inline">Save 17%</span>
 								<span className="sm:hidden">-17%</span>
-							</Badge>
+							</div>
 						</button>
 					</div>
 				</div>
 
 				{/* Plans Comparison */}
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
 					{/* Free Plan */}
-					<Card className="p-4 sm:p-6 lg:p-8 border-2 border-slate-200 relative">
-						<div className="text-center mb-4 sm:mb-6">
-							<h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">Free Plan</h3>
-							<div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-2">
-								€0<span className="text-sm sm:text-base lg:text-lg font-normal text-slate-600">/month</span>
+					<Card className="p-6 sm:p-8 lg:p-10 border-2 border-slate-200 relative hover:border-slate-300 transition-all duration-200 bg-gradient-to-br from-white to-slate-50">
+						<div className="text-center mb-6 sm:mb-8">
+							<div className="inline-flex items-center justify-center w-16 h-16 bg-slate-100 rounded-2xl mb-4">
+								<Shield className="h-8 w-8 text-slate-600" />
 							</div>
-							<p className="text-sm sm:text-base text-slate-600">Perfect for getting started</p>
-							<Badge className="mt-2 sm:mt-3 bg-slate-100 text-slate-700 text-xs sm:text-sm">Current Plan</Badge>
+							<h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">Free Plan</h3>
+							<div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-2">
+								€0<span className="text-lg sm:text-xl font-normal text-slate-600">/month</span>
+							</div>
+							<p className="text-sm sm:text-base text-slate-600 mb-3">Perfect for getting started</p>
+							<div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs sm:text-sm font-medium">
+								<Check className="h-3 w-3" />
+								Current Plan
+							</div>
 						</div>
 
 						<ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
